@@ -75,6 +75,10 @@
     #passwordForm {
       min-width: 300px;
     }
+
+    .fa-warning-icon {
+      color: orange !important;
+    }
   </style>
 </head>
 <body>
@@ -105,6 +109,14 @@
     <input type="password" class="form-control mb-3" id="pagePassword" placeholder="Password..." required autofocus>
     <button type="submit" class="btn btn-primary w-100 mb-2">Submit</button>
     <a href="index.html" class="btn btn-outline-secondary w-100 mb-2">Ke Beranda</a>
+    <div class="text-center mt-2" id="passwordStatus" style="font-size:0.95em;">
+      <span id="passwordStatusIcon" style="display:none; color:green;">
+        <i class="fas fa-check-circle"></i>
+      </span>
+      <span id="passwordStatusText" class="text-success" style="display:none;">
+        Password terhubung
+      </span>
+    </div>
     <div class="invalid-feedback mt-2" id="passwordError" style="display:none;">Password salah!</div>
   </form>
 </div>
@@ -601,28 +613,51 @@
       }
     });
 
-    // Ambil password dari endpoint baru
-    let sheetPassword = null;
-    fetch('https://script.googleusercontent.com/macros/echo?user_content_key=AehSKLhLUXbbewOVejilKoLtvUMGfIbvcKz0o_32uRUjGHALceDt7KNfX7CK7U5cQBDu674KufUTJ-aLHW7-3yoSGivSyToPfrxMnizxAa4V77aMFEk-ZS0iRUc8hkPW_ZJ_Daff1Za4gJcDX4Z13yMFHNg0c89DFC7tunchDXVVO_GVBFdQlk5Zmf-rrj2tmpA2FBRmB3UbF6yZ3PSq7uz-gOWiLA4nIskTue2NX-gRjnUssSRRmvoX-joV--2QnDa4u_88OjxjHZNWwg84XgQKzI_0IZtHVVTvB_eGEIe72vuc_9l7aSaDqYBgBefueg&lib=MHA4i-w8so2FGWH4g8fyXUc9z3mUUDUeO')
-      .then(r => r.json())
-      .then(data => sheetPassword = data.password)
-      .catch(() => sheetPassword = null);
+    document.addEventListener('DOMContentLoaded', function() {
+  // Tampilkan status "tidak terhubung" sejak awal
+  document.getElementById('passwordStatusIcon').innerHTML = '<i class="fas fa-exclamation-circle fa-warning-icon"></i>';
+  document.getElementById('passwordStatusIcon').style.color = 'orange';
+  document.getElementById('passwordStatusIcon').style.display = 'inline';
+  document.getElementById('passwordStatusText').textContent = 'Tidak terhubung ke server';
+  document.getElementById('passwordStatusText').className = 'text-warning';
+  document.getElementById('passwordStatusText').style.display = 'inline';
 
-    // Lindungi halaman dengan overlay password
-    document.getElementById('passwordForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-      const pwdInput = document.getElementById('pagePassword');
-      const errBox = document.getElementById('passwordError');
-      if (sheetPassword && pwdInput.value === sheetPassword) {
-        document.getElementById('passwordOverlay').style.display = 'none';
-        pwdInput.value = '';
-        errBox.style.display = 'none';
-      } else {
-        errBox.style.display = 'block';
-        pwdInput.value = '';
-        pwdInput.focus();
-      }
+  // Ambil password dari endpoint
+  let sheetPassword = null;
+  fetch('https://script.googleusercontent.com/macros/echo?user_content_key=AehSKLhLUXbbewOVejilKoLtvUMGfIbvcKz0o_32uRUjGHALceDt7KNfX7CK7U5cQBDu674KufUTJ-aLHW7-3yoSGivSyToPfrxMnizxAa4V77aMFEk-ZS0iRUc8hkPW_ZJ_Daff1Za4gJcDX4Z13yMFHNg0c89DFC7tunchDXVVO_GVBFdQlk5Zmf-rrj2tmpA2FBRmB3UbF6yZ3PSq7uz-gOWiLA4nIskTue2NX-gRjnUssSRRmvoX-joV--2QnDa4u_88OjxjHZNWwg84XgQKzI_0IZtHVVTvB_eGEIe72vuc_9l7aSaDqYBgBefueg&lib=MHA4i-w8so2FGWH4g8fyXUc9z3mUUDUeO')
+    .then(r => r.json())
+    .then(data => {
+      sheetPassword = data.password;
+      // Jika sukses, ubah ke status hijau
+      document.getElementById('passwordStatusIcon').innerHTML = '<i class="fas fa-check-circle"></i>';
+      document.getElementById('passwordStatusIcon').style.color = 'green';
+      document.getElementById('passwordStatusIcon').style.display = 'inline';
+      document.getElementById('passwordStatusText').textContent = 'Password terhubung';
+      document.getElementById('passwordStatusText').className = 'text-success';
+      document.getElementById('passwordStatusText').style.display = 'inline';
+    })
+    .catch((err) => {
+      // Jika gagal, biarkan status "tidak terhubung" tetap tampil
+      console.error('Password fetch error:', err);
+      sheetPassword = null;
     });
+
+  // Lindungi halaman dengan overlay password
+  document.getElementById('passwordForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const pwdInput = document.getElementById('pagePassword');
+    const errBox = document.getElementById('passwordError');
+    if (sheetPassword && pwdInput.value === sheetPassword) {
+      document.getElementById('passwordOverlay').style.display = 'none';
+      pwdInput.value = '';
+      errBox.style.display = 'none';
+    } else {
+      errBox.style.display = 'block';
+      pwdInput.value = '';
+      pwdInput.focus();
+    }
+  });
+});
   </script>
 
 <div style="text-align:center; margin-top: 40px;">
