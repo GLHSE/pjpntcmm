@@ -406,13 +406,21 @@
     });
 
     function handleFiles(files) {
-      selectedFiles = Array.from(files).filter(file => {
+      let fileArray = Array.from(files).filter(file => {
         if (file.size > 5 * 1024 * 1024) { // 5MB limit
           showAlert('warning', `File ${file.name} terlalu besar (max 5MB)`);
           return false;
         }
         return file.type.startsWith('image/');
       });
+
+      // Batasi maksimal 2 file
+      if (selectedFiles.length + fileArray.length > 2) {
+        showAlert('warning', 'Maksimal hanya boleh upload 2 foto.');
+        fileArray = fileArray.slice(0, 2 - selectedFiles.length);
+      }
+
+      selectedFiles = selectedFiles.concat(fileArray).slice(0, 2);
       displayImagePreviews();
     }
 
