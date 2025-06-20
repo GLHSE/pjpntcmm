@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Data SHEAP - PT. Prima Jaya Persada Nusantara</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">
+        <img src="hse-prima-jaya-tcmm/logo.png" width="40" class="me-2" alt="Logo" /> PT. Prima Jaya Persada Nusantara
+      </a>
+      <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="index.html">Beranda</a></li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
+              SHE AP
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="hazard-report.html">Hazard Report</a></li>
+              <li><a class="dropdown-item active" href="sheap.html">Data SHE AP</a></li>
+            </ul>
+          </li>
+          <li class="nav-item"><a class="nav-link" href="kegiatan.html">Kegiatan</a></li>
+          <li class="nav-item"><a class="nav-link" href="mom.html">MoM</a></li>
+          <li class="nav-item"><a class="nav-link" href="Campaign.html">Campaign</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Konten SHEAP -->
+  <div class="container my-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <div>
+        <h2 class="mb-2">Data SHE AP</h2>
+        <p class="text-muted mb-0">Safety, Health, Environment and Production</p>
+      </div>
+      <a href="hazard-report.html" class="btn btn-outline-warning">
+        <i class="fas fa-exclamation-triangle me-2"></i>Hazard Report
+      </a>
+    </div>
+    
+    <div class="alert alert-info" role="alert">
+      <i class="fas fa-info-circle me-2"></i>
+      <strong>Informasi:</strong> Berikut ini adalah tampilan dokumen SHE AP langsung dari Google Spreadsheet yang diperbarui secara real-time.
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <h5 class="mb-0">
+          <i class="fas fa-chart-line me-2"></i>Dashboard SHE AP
+        </h5>
+      </div>
+      <div class="card-body p-0">
+        <div class="ratio ratio-16x9">
+          <iframe
+            src="https://docs.google.com/spreadsheets/d/1GDnY1GHZ0QKOzKsS-m9MPttImSilSlye/preview"
+            frameborder="0"
+            allowfullscreen
+            loading="lazy"
+            title="Data SHEAP Dashboard"
+          ></iframe>
+        </div>
+      </div>
+    </div>
+
+    <div class="row mt-4">
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-body text-center">
+            <i class="fas fa-shield-alt fa-3x text-primary mb-3"></i>
+            <h5>Safety First</h5>
+            <p class="text-muted">Keselamatan adalah prioritas utama dalam setiap operasi</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-body text-center">
+            <i class="fas fa-leaf fa-3x text-success mb-3"></i>
+            <h5>Environment Care</h5>
+            <p class="text-muted">Menjaga lingkungan untuk generasi mendatang</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+</body>
+</html>
