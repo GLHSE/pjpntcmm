@@ -71,7 +71,8 @@
         width: 100%;
         height: auto;
         max-height: 220px;
-        object-fit: cover;
+        object-fit: contain; /* Ganti cover ke contain agar gambar tidak terpotong */
+        display: block;
       }
       .gallery-desc {
         font-size: 0.9rem;
