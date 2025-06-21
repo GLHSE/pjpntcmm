@@ -10,15 +10,22 @@
     body { background: #fafafa; }
     .gallery-img {
       width: 100%;
-      max-height: 320px;      /* Batas tinggi maksimal, bisa diubah sesuai kebutuhan */
-      object-fit: contain;    /* Gambar selalu utuh, tidak terpotong */
+      max-height: 320px;
+      object-fit: contain;
       border-radius: 12px;
       box-shadow: 0 2px 8px rgba(0,0,0,0.08);
       margin-bottom: 8px;
-      background: #f4f4f4;    /* Warna latar belakang area kosong */
+      background: #f4f4f4;
       display: block;
       margin-left: auto;
       margin-right: auto;
+      transition: box-shadow 0.2s, transform 0.2s;
+      cursor: pointer;
+    }
+    .gallery-img:active,
+    .gallery-img:hover {
+      box-shadow: 0 4px 16px rgba(25,118,210,0.18);
+      transform: scale(1.03);
     }
     .gallery-title {
       font-size: 2rem;
@@ -28,7 +35,7 @@
       font-weight: 700;
       letter-spacing: 1px;
       position: relative;
-      display: inline-block;
+      display: block;
       padding-bottom: 8px;
     }
     .gallery-title:after {
@@ -51,6 +58,19 @@
       color: #555;
       text-align: center;
       margin-bottom: 1.2rem;
+    }
+    @media (max-width: 576px) {
+      .gallery-title {
+        font-size: 1.3rem;
+        margin-bottom: 1.2rem;
+      }
+      .gallery-img {
+        max-height: 180px;
+      }
+      .gallery-desc {
+        font-size: 0.9rem;
+        margin-bottom: 0.8rem;
+      }
     }
   </style>
 </head>
@@ -82,14 +102,14 @@
       <span class="icon">📸</span>
       Galeri Campaign
     </div>
-    <div id="gallery" class="row g-3"></div>
+    <div id="gallery" class="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-3"></div>
     <div id="loading" class="text-center text-muted mt-4">Memuat foto...</div>
 
     <!-- Modal untuk gambar fullscreen -->
     <div class="modal fade" id="imgModal" tabindex="-1" aria-labelledby="imgModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered modal-xl">
+      <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content bg-transparent border-0">
-          <img id="modalImg" src="" alt="Preview" style="width:100%;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,0.2);" />
+          <img id="modalImg" src="" alt="Preview" style="width:100%;max-height:80vh;object-fit:contain;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,0.2);" />
         </div>
       </div>
     </div>
