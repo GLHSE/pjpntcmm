@@ -10,8 +10,8 @@
     body { background: #fafafa; }
     .gallery-img {
       width: 100%;
-      max-height: 320px;
-      object-fit: contain;
+      aspect-ratio: 1/1;
+      object-fit: cover;
       border-radius: 12px;
       box-shadow: 0 2px 8px rgba(0,0,0,0.08);
       margin-bottom: 8px;
@@ -58,6 +58,10 @@
       color: #555;
       text-align: center;
       margin-bottom: 1.2rem;
+      min-height: 2.5em;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
     @media (max-width: 576px) {
       .gallery-title {
@@ -66,11 +70,28 @@
       }
       .gallery-img {
         max-height: 180px;
+        aspect-ratio: 1/1;
       }
       .gallery-desc {
         font-size: 0.9rem;
         margin-bottom: 0.8rem;
       }
+    }
+    /* Modal deskripsi */
+    #modalDesc {
+      color: #333;
+      font-size: 1.05rem;
+      text-align: center;
+      margin-top: 1rem;
+      margin-bottom: 1rem;
+      background: rgba(255,255,255,0.92); /* Tambahkan background putih transparan */
+      border-radius: 10px;
+      padding: 12px 18px;
+      max-width: 90%;
+      margin-left: auto;
+      margin-right: auto;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      display: inline-block;
     }
   </style>
 </head>
@@ -107,15 +128,21 @@
 
     <!-- Modal untuk gambar fullscreen -->
     <div class="modal fade" id="imgModal" tabindex="-1" aria-labelledby="imgModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content bg-transparent border-0">
-          <img id="modalImg" src="" alt="Preview" style="width:100%;max-height:80vh;object-fit:contain;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,0.2);" />
+          <img id="modalImg" src="" alt="Preview" style="width:100%;max-height:70vh;object-fit:contain;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,0.2);" />
+          <div id="modalDesc"></div>
         </div>
       </div>
     </div>
   </div>
 
   <script>
+    // Fungsi untuk memotong deskripsi
+    function truncate(str, n) {
+      return (str.length > n) ? str.substr(0, n-1) + '…' : str;
+    }
+
     document.addEventListener('DOMContentLoaded', function() {
       fetch('https://script.google.com/macros/s/AKfycbws5oAebPM0ynoKT0SlgnnJRNtkRYNgtkUsjQfKAOgMWE7ck6Xn63Dlxf-CexX6d0gu/exec')
         .then(response => response.json())
@@ -131,9 +158,11 @@
             if(row['Url Foto']) {
               let col = document.createElement('div');
               col.className = 'col-12 col-sm-6 col-md-4 col-lg-3';
+              // Potong deskripsi jika terlalu panjang
+              let shortDesc = truncate(row['Diskripsi'] || '', 40);
               col.innerHTML = `
-                <img src="${row['Url Foto']}" class="gallery-img" alt="" style="cursor:pointer;" data-bs-toggle="modal" data-bs-target="#imgModal" data-img="${row['Url Foto']}">
-                <div class="gallery-desc">${row['Diskripsi'] || ''}</div>
+                <img src="${row['Url Foto']}" class="gallery-img" alt="" style="cursor:pointer;" data-bs-toggle="modal" data-bs-target="#imgModal" data-img="${row['Url Foto']}" data-desc="${(row['Diskripsi']||'').replace(/"/g, '&quot;')}">
+                <div class="gallery-desc">${shortDesc}</div>
               `;
               gallery.appendChild(col);
             }
@@ -143,6 +172,7 @@
           gallery.addEventListener('click', function(e) {
             if(e.target.classList.contains('gallery-img')) {
               document.getElementById('modalImg').src = e.target.getAttribute('data-img');
+              document.getElementById('modalDesc').innerText = e.target.getAttribute('data-desc');
             }
           });
         });
