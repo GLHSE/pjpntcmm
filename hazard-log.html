@@ -112,7 +112,7 @@
   </div>
 
   <script>
-    const scriptURL = "https://script.google.com/macros/s/AKfycbx3hputRiWHPMIRVI4Nom4XsUkdb-t2kladDN8KFdk686TMjvKurAJs1HFGKj6O7_vA/exec";
+    const scriptURL = "https://script.google.com/macros/s/AKfycbyskmeOYfZq1o6UUZ608vjRiKlPsqraDaG66D84VGi1v_ENGSfl6S2ia9qyylyg2wZe/exec";
 
     fetch(scriptURL)
       .then(response => response.json())
@@ -123,8 +123,20 @@
           const statusLabel = row.status || "-";
 
           const tr = document.createElement("tr");
+
+          // Fungsi format tanggal DD-MM-YY
+          function formatTanggal(tanggalStr) {
+            if (!tanggalStr) return "";
+            const date = new Date(tanggalStr);
+            if (isNaN(date)) return tanggalStr;
+            const dd = String(date.getDate()).padStart(2, '0');
+            const mm = String(date.getMonth() + 1).padStart(2, '0');
+            const yyyy = date.getFullYear();
+            return `${dd}-${mm}-${yyyy}`;
+          }
+
           tr.innerHTML = `
-            <td>${row.tanggal || ""}</td>
+            <td>${formatTanggal(row.tanggal)}</td>
             <td>${row.deskripsi || ""}</td>
             <td>${row.rekomendasi || ""}</td>
             <td>
