@@ -31,14 +31,6 @@
       background-color: #007BFF;
       color: white;
     }
-    .foto-button {
-      padding: 6px 12px;
-      background-color: #28a745;
-      color: white;
-      text-decoration: none;
-      border-radius: 4px;
-      font-size: 0.9rem;
-    }
     .status-open {
       background-color: #ffc107;
       padding: 4px 8px;
@@ -69,8 +61,6 @@
     .button-container {
       text-align: center;
     }
-
-    /* Tombol X pojok kanan atas */
     .close-button {
       position: absolute;
       top: 10px;
@@ -83,78 +73,112 @@
     .close-button:hover {
       color: #000;
     }
+    .foto-button {
+      padding: 7px 18px;
+      background: linear-gradient(90deg, #007BFF 60%, #00c6ff 100%);
+      color: #fff;
+      text-decoration: none;
+      border-radius: 25px;
+      font-size: 1rem;
+      font-weight: bold;
+      letter-spacing: 1px;
+      box-shadow: 0 2px 8px rgba(0,123,255,0.15);
+      transition: background 0.2s, transform 0.2s;
+      display: inline-block;
+      margin: 3px 0;
+      border: none;
+    }
+    .foto-button:hover {
+      background: linear-gradient(90deg, #0056b3 60%, #00aaff 100%);
+      color: #fff;
+      transform: scale(1.07);
+      box-shadow: 0 4px 16px rgba(0,123,255,0.25);
+      text-decoration: none;
+    }
   </style>
 </head>
 <body>
-  <!-- Tombol X di pojok kanan atas -->
   <a href="hazard-report.html" class="close-button" title="Kembali ke Form">×</a>
-
-  <h1>Hazard Log</h1>
-
+  <h1>Monitoring Hazzard Report</h1>
   <table id="hazardTable">
     <thead>
       <tr>
         <th>Tanggal Pelaporan</th>
-        <th>Deskripsi</th>
-        <th>Rekomendasi</th>
-        <th>Foto</th>
-        <th>Lokasi</th>
+        <th>Deskripsi Temuan</th>
+        <th>Rekomendasi Tindakan</th>
+        <th>Bukti Foto (Open)</th>
+        <th>Bukti Foto (Close)</th>
+        <th>Lokasi Temuan</th>
         <th>Nama Pelapor</th>
         <th>Status</th>
       </tr>
     </thead>
     <tbody></tbody>
   </table>
-
-  <!-- Tombol kembali di bawah -->
   <div class="button-container">
     <a href="hazard-report.html" class="back-button">← Kembali ke Halaman Hazard Report</a>
   </div>
-
   <script>
-    const scriptURL = "https://script.google.com/macros/s/AKfycbyskmeOYfZq1o6UUZ608vjRiKlPsqraDaG66D84VGi1v_ENGSfl6S2ia9qyylyg2wZe/exec";
+const scriptURL = "https://script.google.com/macros/s/AKfycbycRuFZ-xX3qARcwo6EYRSJRfhIi0kuYbJGVXirMSArVsp_Cubt6IutQtUp686ZbDHjiw/exec";
 
-    fetch(scriptURL)
-      .then(response => response.json())
-      .then(data => {
-        const tbody = document.querySelector("#hazardTable tbody");
-        data.forEach(row => {
-          const statusClass = row.status && row.status.toLowerCase() === "close" ? "status-close" : "status-open";
-          const statusLabel = row.status || "-";
-
-          const tr = document.createElement("tr");
-
-          // Fungsi format tanggal DD-MM-YY
-          function formatTanggal(tanggalStr) {
-            if (!tanggalStr) return "";
-            const date = new Date(tanggalStr);
-            if (isNaN(date)) return tanggalStr;
-            const dd = String(date.getDate()).padStart(2, '0');
-            const mm = String(date.getMonth() + 1).padStart(2, '0');
-            const yyyy = date.getFullYear();
-            return `${dd}-${mm}-${yyyy}`;
-          }
-
-          tr.innerHTML = `
-            <td>${formatTanggal(row.tanggal)}</td>
-            <td>${row.deskripsi || ""}</td>
-            <td>${row.rekomendasi || ""}</td>
-            <td>
-              ${row.fotoUrl
-                ? `<a class="foto-button" href="${row.fotoUrl}" target="_blank">FOTO</a>`
-                : "-"}
-            </td>
-            <td>${row.tglPerbaikan || ""}</td>
-            <td>${row.pelapor || ""}</td>
-            <td><span class="${statusClass}">${statusLabel}</span></td>
-          `;
-          tbody.appendChild(tr);
-        });
-      })
-      .catch(error => {
-        console.error("Gagal memuat data:", error);
-        alert("Gagal mengambil data hazard log.");
-      });
+fetch(scriptURL)
+  .then(response => response.json())
+  .then(data => {
+    const tbody = document.querySelector("#hazardTable tbody");
+    data.forEach(row => {
+      function formatTanggal(tanggalStr) {
+  if (!tanggalStr) return "";
+  // Jika format ISO (misal: 2025-06-24T16:00:00.000Z)
+  if (/^\d{4}-\d{2}-\d{2}/.test(tanggalStr)) {
+    const dateObj = new Date(tanggalStr);
+    const d = String(dateObj.getDate()).padStart(2, '0');
+    const m = String(dateObj.getMonth() + 1).padStart(2, '0');
+    const y = dateObj.getFullYear();
+    return `${d}-${m}-${y}`;
+  }
+  // Jika format sudah YYYY-MM-DD
+  if (/^\d{4}-\d{2}-\d{2}$/.test(tanggalStr)) {
+    const [y, m, d] = tanggalStr.split('-');
+    return `${d}-${m}-${y}`;
+  }
+  return tanggalStr;
+}
+      // Tampilkan tombol "Lihat Foto" yang lebih menarik
+      let fotoCell = "-";
+      if (row.fotoOpen && row.fotoOpen.trim() !== "") {
+        const fotoArr = row.fotoOpen.split(/\s*,\s*|\s+/).filter(Boolean);
+        fotoCell = fotoArr.map((url, i) =>
+          `<a class="foto-button" href="${url}" target="_blank">📷 Foto${fotoArr.length > 1 ? ' ' + (i+1) : ''}</a>`
+        ).join('<br>');
+      }
+      let fotoCloseCell = "-";
+      if (row.fotoClose && row.fotoClose.trim() !== "") {
+        const fotoArr = row.fotoClose.split(/\s*,\s*|\s+/).filter(Boolean);
+        fotoCloseCell = fotoArr.map((url, i) =>
+          `<a class="foto-button" href="${url}" target="_blank">📷 Foto${fotoArr.length > 1 ? ' ' + (i+1) : ''}</a>`
+        ).join('<br>');
+      }
+      let lokasiCell = row.lokasi || "-";
+      const statusClass = row.status && row.status.toLowerCase() === "close" ? "status-close" : "status-open";
+      const statusLabel = row.status || "-";
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td>${formatTanggal(row.tanggal)}</td>
+        <td>${row.deskripsi || ""}</td>
+        <td>${row.rekomendasi || ""}</td>
+        <td>${fotoCell}</td>
+        <td>${fotoCloseCell}</td>
+        <td>${lokasiCell}</td>
+        <td>${row.pelapor || ""}</td>
+        <td><span class="${statusClass}">${statusLabel}</span></td>
+      `;
+      tbody.appendChild(tr);
+    });
+  })
+  .catch(error => {
+    console.error("Gagal memuat data:", error);
+    alert("Gagal mengambil data hazard log.");
+  });
   </script>
 </body>
 </html>
