@@ -6,30 +6,81 @@
   <title>Hazard Log</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
       padding: 20px;
-      background-color: #f0f2f5;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
       position: relative;
     }
-    h1 {
+    .header-container {
       text-align: center;
-      color: #333;
+      background: rgba(255, 255, 255, 0.95);
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      backdrop-filter: blur(10px);
+      margin-bottom: 30px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    .logo {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 15px;
+      display: block;
+      border-radius: 8px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+    h1 {
+      color: #2c3e50;
+      margin: 0;
+      font-size: 2.2rem;
+      font-weight: 700;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+      background: linear-gradient(45deg, #667eea, #764ba2);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .subtitle {
+      color: #7f8c8d;
+      font-size: 1.1rem;
+      margin-top: 5px;
+      font-weight: 400;
     }
     table {
       width: 100%;
       border-collapse: collapse;
       margin-top: 20px;
       background-color: #fff;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
     }
     th, td {
-      border: 1px solid #ccc;
-      padding: 12px;
+      border: 1px solid #e1e5e9;
+      padding: 15px 12px;
       text-align: center;
       font-size: 14px;
     }
     th {
-      background-color: #007BFF;
+      background: linear-gradient(90deg, #007BFF 0%, #0056b3 100%);
       color: white;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-size: 13px;
+    }
+    tbody tr {
+      transition: all 0.3s ease;
+    }
+    tbody tr:nth-child(even) {
+      background-color: #f8f9fa;
+    }
+    tbody tr:hover {
+      background-color: #e3f2fd;
+      transform: scale(1.01);
+      box-shadow: 0 4px 15px rgba(0, 123, 255, 0.1);
     }
     .status-open {
       background-color: #ffc107;
@@ -48,30 +99,37 @@
     .back-button {
       margin-top: 30px;
       display: inline-block;
-      padding: 10px 20px;
-      background-color: #6c757d;
+      padding: 12px 25px;
+      background: linear-gradient(90deg, #6c757d 0%, #495057 100%);
       color: white;
       text-decoration: none;
-      border-radius: 5px;
+      border-radius: 8px;
       font-weight: bold;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 12px rgba(108, 117, 125, 0.2);
     }
     .back-button:hover {
-      background-color: #5a6268;
+      background: linear-gradient(90deg, #495057 0%, #343a40 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(108, 117, 125, 0.3);
     }
     .button-container {
       text-align: center;
     }
     .close-button {
       position: absolute;
-      top: 10px;
-      right: 20px;
-      font-size: 24px;
+      top: 15px;
+      right: 25px;
+      font-size: 28px;
       text-decoration: none;
-      color: #666;
+      color: rgba(255, 255, 255, 0.8);
       font-weight: bold;
+      transition: all 0.3s ease;
+      z-index: 1000;
     }
     .close-button:hover {
-      color: #000;
+      color: #fff;
+      transform: scale(1.1);
     }
     .foto-button {
       padding: 7px 18px;
@@ -95,11 +153,45 @@
       box-shadow: 0 4px 16px rgba(0,123,255,0.25);
       text-decoration: none;
     }
+    .sheet-button {
+      padding: 12px 25px;
+      background: linear-gradient(90deg, #28a745 60%, #20c997 100%);
+      color: #fff;
+      text-decoration: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: bold;
+      letter-spacing: 1px;
+      box-shadow: 0 3px 12px rgba(40,167,69,0.2);
+      transition: all 0.3s ease;
+      display: inline-block;
+      margin: 10px;
+      border: none;
+    }
+    .sheet-button:hover {
+      background: linear-gradient(90deg, #1e7e34 60%, #17a2b8 100%);
+      color: #fff;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(40,167,69,0.3);
+      text-decoration: none;
+    }
   </style>
 </head>
 <body>
   <a href="hazard-report.html" class="close-button" title="Kembali ke Form">×</a>
-  <h1>Monitoring Hazzard Report</h1>
+  
+  <div class="header-container">
+    <img src="logo.png" alt="Logo Prima Jaya TCMM" class="logo">
+    <h1>Monitoring Hazard Report</h1>
+    <p class="subtitle">Sistem Monitoring Laporan Bahaya Prima Jaya TCMM</p>
+  </div>
+  
+  <!-- Tombol ke Google Sheet -->
+  <div class="button-container" style="margin-bottom: 20px;">
+    <a href="https://docs.google.com/spreadsheets/d/1vEdl34AyXmY4dBYEdqp5n9rKpB0YaZ6OR_WB80tXz5o/edit?gid=0#gid=0&t=<?php echo time(); ?>" 
+       class="sheet-button" target="_blank">📊 Buka Google Sheet</a>
+  </div>
+  
   <table id="hazardTable">
     <thead>
       <tr>
@@ -125,7 +217,8 @@ fetch(scriptURL)
   .then(response => response.json())
   .then(data => {
     const tbody = document.querySelector("#hazardTable tbody");
-    data.forEach(row => {
+    // Reverse the data array to show latest entries first (bottom to top)
+    data.reverse().forEach(row => {
       function formatTanggal(tanggalStr) {
   if (!tanggalStr) return "";
   // Jika format ISO (misal: 2025-06-24T16:00:00.000Z)
