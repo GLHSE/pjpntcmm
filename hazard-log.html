@@ -57,6 +57,12 @@
       overflow: hidden;
       box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
     }
+    .table-wrapper {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      border-radius: 10px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    }
     th, td {
       border: 1px solid #e1e5e9;
       padding: 15px 12px;
@@ -175,6 +181,115 @@
       box-shadow: 0 6px 20px rgba(40,167,69,0.3);
       text-decoration: none;
     }
+    
+    /* Mobile Responsive Design */
+    @media (max-width: 768px) {
+      body {
+        padding: 10px;
+      }
+      
+      .header-container {
+        padding: 15px;
+        margin-bottom: 20px;
+      }
+      
+      .logo {
+        width: 60px;
+        height: 60px;
+        margin-bottom: 10px;
+      }
+      
+      h1 {
+        font-size: 1.8rem;
+        margin-bottom: 5px;
+      }
+      
+      .subtitle {
+        font-size: 0.9rem;
+      }
+      
+      .close-button {
+        top: 10px;
+        right: 15px;
+        font-size: 24px;
+      }
+      
+      .sheet-button {
+        padding: 10px 20px;
+        font-size: 0.9rem;
+        margin: 5px;
+      }
+      
+      table {
+        font-size: 12px;
+        border-radius: 8px;
+      }
+      
+      th, td {
+        padding: 8px 4px;
+        font-size: 11px;
+      }
+      
+      th {
+        font-size: 10px;
+        letter-spacing: 0.3px;
+      }
+      
+      .foto-button {
+        padding: 5px 12px;
+        font-size: 0.8rem;
+        margin: 2px 0;
+        border-radius: 15px;
+      }
+      
+      .status-open, .status-close {
+        padding: 3px 6px;
+        font-size: 11px;
+      }
+      
+      .back-button {
+        padding: 10px 20px;
+        font-size: 0.9rem;
+        margin-top: 20px;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 1.5rem;
+      }
+      
+      .subtitle {
+        font-size: 0.8rem;
+      }
+      
+      .sheet-button {
+        padding: 8px 16px;
+        font-size: 0.8rem;
+      }
+      
+      /* Make table more mobile-friendly */
+      table {
+        font-size: 10px;
+      }
+      
+      th, td {
+        padding: 6px 3px;
+        font-size: 9px;
+      }
+      
+      .foto-button {
+        padding: 4px 8px;
+        font-size: 0.7rem;
+        margin: 1px;
+      }
+      
+      /* Enable horizontal scroll for table */
+      .table-wrapper {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+    }
   </style>
 </head>
 <body>
@@ -192,21 +307,23 @@
        class="sheet-button" target="_blank">📊 Buka Google Sheet</a>
   </div>
   
-  <table id="hazardTable">
-    <thead>
-      <tr>
-        <th>Tanggal Pelaporan</th>
-        <th>Deskripsi Temuan</th>
-        <th>Rekomendasi Tindakan</th>
-        <th>Bukti Foto (Open)</th>
-        <th>Bukti Foto (Close)</th>
-        <th>Lokasi Temuan</th>
-        <th>Nama Pelapor</th>
-        <th>Status</th>
-      </tr>
-    </thead>
-    <tbody></tbody>
-  </table>
+  <div class="table-wrapper">
+    <table id="hazardTable">
+      <thead>
+        <tr>
+          <th>Tanggal Pelaporan</th>
+          <th>Deskripsi Temuan</th>
+          <th>Rekomendasi Tindakan</th>
+          <th>Bukti Foto (Open)</th>
+          <th>Bukti Foto (Close)</th>
+          <th>Lokasi Temuan</th>
+          <th>Nama Pelapor</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
   <div class="button-container">
     <a href="hazard-report.html" class="back-button">← Kembali ke Halaman Hazard Report</a>
   </div>
