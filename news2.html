@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Safety Talk General di Tambang | PT. PJP Nusantara</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f9f9f9;
+    }
+
+    .navbar {
+      background-color: #002c5f;
+    }
+
+    .navbar-brand {
+      font-weight: bold;
+      font-size: 1.2rem;
+      color: #fff;
+    }
+
+    .navbar-brand img {
+      height: 40px;
+      width: auto;
+      margin-right: 10px;
+    }
+
+    .nav-link {
+      color: #ffffff !important;
+      font-size: 0.95rem;
+    }
+
+    .nav-link:hover {
+      color: #ffcb05 !important;
+    }
+
+    .campaign-section {
+      background-color: #fff;
+      padding: 60px 20px;
+      margin-top: 20px;
+    }
+
+    .campaign-header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .campaign-title {
+      font-size: 2rem;
+      font-weight: bold;
+      color: #002c5f;
+      position: relative;
+    }
+
+    .campaign-subtitle {
+      font-size: 1.1rem;
+      color: #666;
+    }
+
+    .campaign-box {
+      background-color: #f8f9fa;
+      border-radius: 12px;
+      padding: 30px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      margin-bottom: 30px;
+    }
+
+    .campaign-box h5 {
+      color: #002c5f;
+      font-weight: bold;
+      margin-bottom: 15px;
+    }
+
+    .campaign-box ul {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .campaign-box ul li::before {
+      content: "\2713\0020";
+      color: #28a745;
+      margin-right: 8px;
+    }
+
+    blockquote {
+      border-left: 4px solid #007bff;
+      padding-left: 20px;
+      margin: 20px 0;
+      font-style: italic;
+    }
+
+    .figure-caption {
+      font-size: 0.9rem;
+      color: #6c757d;
+    }
+
+    ol li {
+      margin-bottom: 8px;
+    }
+    
+    /* Mobile Improvements */
+    .highlight-box {
+      border-left: 4px solid #007bff;
+      background-color: #f8fcff;
+      padding: 15px;
+      margin: 20px 0;
+      border-radius: 0 8px 8px 0;
+    }
+    
+    .image-overlay {
+      position: relative;
+      overflow: hidden;
+      border-radius: 10px;
+    }
+    
+    .image-overlay::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(0deg, rgba(0,44,95,0.7) 0%, rgba(0,44,95,0) 50%);
+    }
+    
+    .image-overlay img {
+      transition: transform 0.5s ease;
+    }
+    
+    .image-overlay:hover img {
+      transform: scale(1.05);
+    }
+    
+    /* Reading Progress Bar */
+    .progress-container {
+      position: fixed;
+      top: 0;
+      z-index: 1100;
+      width: 100%;
+      height: 4px;
+      background: transparent;
+    }
+    
+    .progress-bar {
+      height: 4px;
+      background: #ffcb05;
+      width: 0%;
+    }
+    
+    /* Mobile Responsiveness */
+    @media (max-width: 768px) {
+      .campaign-title {
+        font-size: 1.7rem;
+      }
+      
+      .campaign-subtitle {
+        font-size: 1rem;
+      }
+      
+      .campaign-box {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Reading Progress Bar -->
+  <div class="progress-container">
+    <div class="progress-bar" id="progressBar"></div>
+  </div>
+  
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark sticky-top shadow-sm">
+    <div class="container">
+      <a class="navbar-brand d-flex align-items-center" href="index.html">
+        <img src="hse-prima-jaya-tcmm/logo.png" alt="Logo Perusahaan">
+        PT. Prima Jaya Persada Nusantara
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="index.html">Beranda</a></li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">Report</a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="hazard-report.html">Hazard Report</a></li>
+              <li><a class="dropdown-item" href="sheap.html">Data SHE AP</a></li>
+            </ul>
+          </li>
+          <li class="nav-item"><a class="nav-link" href="media.html">Media</a></li>
+          <li class="nav-item"><a class="nav-link" href="mom.html">MoM</a></li>
+          <li class="nav-item"><a class="nav-link" href="Campaign.html">Campaign</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Campaign Section -->
+  <section class="campaign-section">
+    <div class="container">
+      <div class="campaign-header">
+        <h2 class="campaign-title">Pentingnya Safety Talk General di Tambang</h2>
+        <p class="campaign-subtitle">PT. Prima Jaya Persada Nusantara - Site Melak, Kutai Barat, Kalimantan Timur</p>
+        <div class="text-muted mt-2">
+          <small><i class="bi bi-calendar-event"></i> 27 Juni 2025 | <i class="bi bi-person"></i> HSE Department</small>
+        </div>
+      </div>
+
+      <!-- Hero Image -->
+      <div class="text-center mb-5">
+        <div class="image-overlay">
+          <img src="hse-prima-jaya-tcmm/news2.jpg" class="img-fluid rounded shadow" alt="Safety Talk di Tambang" style="max-height: 500px; object-fit: cover; width: 100%;">
+        </div>
+        <figcaption class="figure-caption text-center mt-2">Kegiatan Safety Talk General di area tambang PT. Prima Jaya Persada Nusantara</figcaption>
+      </div>
+
+      <div class="campaign-box">
+        <h5>Apa itu Safety Talk General?</h5>
+        <p>
+          Safety Talk General merupakan kegiatan briefing singkat yang dilakukan secara rutin sebelum memulai pekerjaan di area tambang. 
+          Kegiatan ini menjadi forum komunikasi efektif antara supervisor dan pekerja untuk membahas topik-topik terkait keselamatan dan kesehatan kerja 
+          yang relevan dengan kondisi di lapangan.
+        </p>
+        
+        <div class="highlight-box mt-4">
+          <p class="mb-0"><strong>Di PT. Prima Jaya Persada Nusantara</strong>, Safety Talk General dilaksanakan setiap pagi selama 10-15 menit 
+          dan wajib diikuti oleh seluruh pekerja shift yang akan bertugas.</p>
+        </div>
+      </div>
+
+      <div class="row mb-4">
+        <div class="col-md-6">
+          <div class="campaign-box h-100">
+            <h5>Manfaat Safety Talk General</h5>
+            <ul>
+              <li>Meningkatkan kesadaran pekerja terhadap potensi bahaya di area kerja</li>
+              <li>Mengingatkan prosedur kerja yang aman dan benar</li>
+              <li>Memperbarui informasi terkait kebijakan K3 terbaru</li>
+              <li>Mendiskusikan insiden atau near miss yang terjadi sebelumnya</li>
+              <li>Menjadi forum untuk berbagi pengalaman dan pembelajaran</li>
+              <li>Membangun komunikasi dua arah antara manajemen dan pekerja</li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <!-- Side Image -->
+          <div class="card border-0 shadow-sm h-100">
+            <img src="hse-prima-jaya-tcmm/logo.png" class="card-img-top" alt="Safety Talk Session" style="height: 200px; object-fit: contain; padding: 20px; background-color: #f8f9fa;">
+            <div class="card-body bg-light">
+              <h6 class="card-title text-center">Logo HSE Prima Jaya TCMM</h6>
+              <p class="card-text small text-center">Health, Safety, dan Environment selalu menjadi prioritas utama perusahaan kami.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="campaign-box">
+        <h5>Topik-topik yang Dibahas dalam Safety Talk General</h5>
+        <div class="row">
+          <div class="col-md-6">
+            <ol>
+              <li>Identifikasi bahaya di area kerja</li>
+              <li>Penggunaan APD (Alat Pelindung Diri) yang benar</li>
+              <li>Prosedur kerja aman untuk aktivitas spesifik</li>
+              <li>Penanganan material berbahaya</li>
+              <li>Pengoperasian alat berat secara aman</li>
+            </ol>
+          </div>
+          <div class="col-md-6">
+            <ol start="6">
+              <li>Perubahan kondisi cuaca dan dampaknya</li>
+              <li>Prosedur tanggap darurat</li>
+              <li>Update peraturan keselamatan tambang</li>
+              <li>Pelajaran dari insiden di industri sejenis</li>
+              <li>Kesehatan dan kesejahteraan pekerja</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+
+      <!-- Highlight Box -->
+      <div class="card border-primary mb-4 shadow-sm">
+        <div class="card-header bg-primary text-white">
+          <h5 class="mb-0"><i class="bi bi-lightbulb"></i> Praktik Terbaik Safety Talk General</h5>
+        </div>
+        <div class="card-body">
+          <p>Berdasarkan pengalaman di PT. Prima Jaya Persada Nusantara, Safety Talk General yang efektif memiliki ciri-ciri berikut:</p>
+          <ul>
+            <li><strong>Singkat dan Fokus:</strong> Tidak terlalu panjang (10-15 menit), langsung pada pokok bahasan</li>
+            <li><strong>Interaktif:</strong> Melibatkan peserta melalui tanya jawab dan diskusi</li>
+            <li><strong>Relevan:</strong> Membahas topik yang berhubungan langsung dengan pekerjaan hari itu</li>
+            <li><strong>Visual:</strong> Menggunakan gambar, video, atau demonstrasi untuk memperjelas pesan</li>
+            <li><strong>Terdokumentasi:</strong> Menjaga catatan peserta dan topik yang dibahas untuk evaluasi</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="campaign-box">
+        <h5>Manfaat Penerapan Safety Talk General</h5>
+        <p>
+          Penerapan program Safety Talk General secara konsisten di PT. Prima Jaya Persada Nusantara telah memberikan berbagai manfaat positif bagi perusahaan dan karyawan.
+        </p>
+        
+        <p>
+          Komunikasi rutin dan terstruktur mengenai keselamatan kerja memiliki dampak positif terhadap budaya keselamatan di lingkungan tambang. Beberapa aspek yang meningkat meliputi:
+        </p>
+        
+        <ul class="mt-3">
+          <li>Kesadaran akan potensi bahaya di lingkungan kerja</li>
+          <li>Pemahaman terhadap prosedur kerja yang aman</li>
+          <li>Kepatuhan terhadap penggunaan alat pelindung diri</li>
+          <li>Pelaporan kondisi dan tindakan tidak aman</li>
+          <li>Keterlibatan semua pihak dalam aspek keselamatan kerja</li>
+        </ul>
+      </div>
+
+      <div class="text-center mt-5">
+        <h4>Mari kita wujudkan budaya kerja yang</h4>
+        <h2 class="fw-bold text-success">AMAN • EFEKTIF • BERDAYA SAING</h2>
+      </div>
+
+      <div class="text-center mt-4">
+        <p class="mb-2" style="font-weight:500;">
+          Ikuti update dan inspirasi K3 kami di Instagram:
+        </p>
+        <a href="https://www.instagram.com/shepjpn.tcmm/" target="_blank" class="btn btn-outline-primary" style="font-weight:600;">
+          <i class="bi bi-instagram"></i> @shepjpn.tcmm
+        </a>
+      </div>
+      
+      <!-- Back to Media button -->
+      <div class="text-center mt-5">
+        <a href="media.html" class="btn btn-secondary">
+          <i class="bi bi-arrow-left"></i> Kembali ke Media
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  
+  <!-- Reading Progress Script -->
+  <script>
+    window.onscroll = function() {
+      var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+      var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      var scrolled = (winScroll / height) * 100;
+      document.getElementById("progressBar").style.width = scrolled + "%";
+    };
+  </script>
+</body>
+</html>
