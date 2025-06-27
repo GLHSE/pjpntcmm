@@ -3,95 +3,107 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Campaign Digital | PT. PJP Nusantara</title>
+  <title>Galeri Campaign - PT. Prima Jaya Persada Nusantara</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <script src="https://unpkg.com/tabletop@1.6.0/tabletop.js"></script>
   <style>
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #f9f9f9;
-    }
-
-    .navbar {
-      background-color: #002c5f;
-    }
-
-    .navbar-brand {
-      font-weight: bold;
-      font-size: 1.2rem;
-      color: #fff;
-    }
-
-    .navbar-brand img {
-      height: 40px;
-      width: auto;
-      margin-right: 10px;
-    }
-
-    .nav-link {
-      color: #ffffff !important;
-      font-size: 0.95rem;
-    }
-
-    .nav-link:hover {
-      color: #ffcb05 !important;
-    }
-
-    .campaign-section {
-      background-color: #fff;
-      padding: 60px 20px;
-      margin-top: 20px;
-    }
-
-    .campaign-header {
-      text-align: center;
-      margin-bottom: 40px;
-    }
-
-    .campaign-title {
-      font-size: 2rem;
-      font-weight: bold;
-      color: #002c5f;
-      position: relative;
-    }
-
-    .campaign-subtitle {
-      font-size: 1.1rem;
-      color: #666;
-    }
-
-    .campaign-box {
-      background-color: #f8f9fa;
+    body { background: #fafafa; }
+    .gallery-img {
+      width: 100%;
+      aspect-ratio: 1/1;
+      object-fit: cover;
       border-radius: 12px;
-      padding: 30px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-      margin-bottom: 30px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      margin-bottom: 8px;
+      background: #f4f4f4;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      transition: box-shadow 0.2s, transform 0.2s;
+      cursor: pointer;
     }
-
-    .campaign-box h5 {
-      color: #002c5f;
-      font-weight: bold;
-      margin-bottom: 15px;
+    .gallery-img:active,
+    .gallery-img:hover {
+      box-shadow: 0 4px 16px rgba(25,118,210,0.18);
+      transform: scale(1.03);
     }
-
-    .campaign-box ul {
-      list-style: none;
-      padding-left: 0;
+    .gallery-title {
+      font-size: 2rem;
+      color: #1976d2;
+      text-align: center;
+      margin-bottom: 2rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      position: relative;
+      display: block;
+      padding-bottom: 8px;
     }
-
-    .campaign-box ul li::before {
-      content: "\2713\0020";
-      color: #28a745;
-      margin-right: 8px;
+    .gallery-title:after {
+      content: "";
+      display: block;
+      margin: 8px auto 0 auto;
+      width: 60%;
+      height: 4px;
+      border-radius: 2px;
+      background: linear-gradient(90deg, #1976d2 60%, #42a5f5 100%);
+    }
+    .gallery-title .icon {
+      font-size: 1.3em;
+      vertical-align: middle;
+      margin-right: 10px;
+      color: #1976d2;
+    }
+    .gallery-desc {
+      font-size: 0.95rem;
+      color: #555;
+      text-align: center;
+      margin-bottom: 1.2rem;
+      min-height: 2.5em;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    @media (max-width: 576px) {
+      .gallery-title {
+        font-size: 1.3rem;
+        margin-bottom: 1.2rem;
+      }
+      .gallery-img {
+        width: 100%;
+        height: auto;
+        max-height: 220px;
+        object-fit: contain; /* Ganti cover ke contain agar gambar tidak terpotong */
+        display: block;
+      }
+      .gallery-desc {
+        font-size: 0.9rem;
+        margin-bottom: 0.8rem;
+      }
+    }
+    /* Modal deskripsi */
+    #modalDesc {
+      color: #333;
+      font-size: 1.05rem;
+      text-align: center;
+      margin-top: 1rem;
+      margin-bottom: 1rem;
+      background: rgba(255,255,255,0.92); /* Tambahkan background putih transparan */
+      border-radius: 10px;
+      padding: 12px 18px;
+      max-width: 90%;
+      margin-left: auto;
+      margin-right: auto;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      display: inline-block;
     }
   </style>
 </head>
 <body>
   <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg navbar-dark sticky-top shadow-sm">
+  <nav class="navbar navbar-expand-lg navbar-dark sticky-top shadow-sm" style="background-color: #002c5f;">
     <div class="container">
       <a class="navbar-brand d-flex align-items-center" href="index.html">
-        <img src="hse-prima-jaya-tcmm/logo.png" alt="Logo Perusahaan">
+        <img src="hse-prima-jaya-tcmm/logo.png" alt="Logo Perusahaan" style="height:40px; width:auto; margin-right:10px;">
         PT. Prima Jaya Persada Nusantara
       </a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown">
@@ -107,75 +119,95 @@
               <li><a class="dropdown-item" href="sheap.html">Data SHE AP</a></li>
             </ul>
           </li>
-          <li class="nav-item"><a class="nav-link" href="kegiatan.html">Kegiatan</a></li>
-          <li class="nav-item"><a class="nav-link" href="mom.html">MoM</a></li>
+          <li class="nav-item"><a class="nav-link" href="dokumen.html">Dokumen</a></li>
           <li class="nav-item"><a class="nav-link active" href="Campaign.html">Campaign</a></li>
         </ul>
       </div>
     </div>
   </nav>
+  <!-- End Navbar -->
 
-  <!-- Campaign Section -->
-  <section class="campaign-section">
-    <div class="container">
-      <div class="campaign-header">
-        <h2 class="campaign-title">Program Campaign Digital</h2>
-        <p class="campaign-subtitle">PT. Prima Jaya Persada Nusantara - Site Melak, Kutai Barat, Kalimantan Timur</p>
-      </div>
+  <div class="container py-5">
+    <div class="gallery-title">
+      <span class="icon">📸</span>
+      Galeri Campaign
+    </div>
+    <div id="gallery" class="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-3"></div>
+    <div id="loading" class="text-center text-muted mt-4">Memuat foto...</div>
 
-      <div class="text-center mb-5">
-        <div style="position:relative; display:inline-block; width:100%; max-width:700px;">
-          <img src="hse-prima-jaya-tcmm/news1.jpg" class="img-fluid rounded shadow" alt="Poster Digital HSE" style="width:100%; max-height:400px; object-fit:cover;">
-          <div style="position:absolute; left:0; right:0; bottom:0; background:rgba(0,44,95,0.6); color:#fff; padding:10px 0; border-radius:0 0 10px 10px; font-size:1.1rem;">
-            Poster digital HSE di area kerja PT. Prima Jaya Persada Nusantara
+    <!-- Modal untuk gambar fullscreen -->
+    <div class="modal fade" id="imgModal" tabindex="-1" aria-labelledby="imgModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content bg-transparent border-0 position-relative p-0">
+          <div style="position:relative;display:flex;justify-content:center;align-items:center;">
+            <img id="modalImg" src="" alt="Preview"
+              style="width:auto;max-width:95vw;max-height:85vh;object-fit:contain;display:block;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,0.2);" />
+          </div>
+          <div id="modalDesc"></div>
+          <div class="text-center my-3">
+            <button type="button"
+              class="btn btn-danger px-4"
+              data-bs-dismiss="modal"
+              aria-label="Close">
+              Tutup
+            </button>
           </div>
         </div>
-        <figcaption class="figure-caption text-center mt-2" style="color:#6c757d;">Poster digital HSE sebagai media edukasi dan komunikasi keselamatan kerja</figcaption>
       </div>
+    </div>
 
-      <div class="campaign-box">  
-        <h5>Tujuan Program</h5>
-        <p>
-          Program Campaign Digital bertujuan untuk meningkatkan kesadaran dan partisipasi seluruh karyawan dalam berbagai inisiatif perusahaan, khususnya terkait keselamatan kerja, lingkungan, budaya kerja, dan pelaporan hazard secara digital. Melalui pendekatan digital, informasi dapat diakses lebih cepat, mudah, dan merata oleh seluruh tim.
-        </p>
-      </div>
+    <!-- Ajakan Follow Instagram -->
+    <div class="text-center mt-5">
+      <p class="mb-2" style="font-weight:500;">
+        Ikuti update dan inspirasi campaign digital kami di Instagram:
+      </p>
+      <a href="https://www.instagram.com/shepjpn.tcmm/" target="_blank" class="btn btn-outline-primary" style="font-weight:600;">
+        <i class="bi bi-instagram"></i> @shepjpn.tcmm
+      </a>
+    </div>
+  </div>
 
-      <div class="campaign-box">
-        <h5>Fokus Kampanye</h5>
-        <ul>
-          <li>Meningkatkan pemahaman tentang Keselamatan & Kesehatan Kerja (K3)</li>
-          <li>Mendorong perilaku ramah lingkungan dan keberlanjutan</li>
-          <li>Memperkuat budaya kerja produktif dan kolaboratif</li>
-          <li>Mempermudah pelaporan hazard dan tindakan preventif secara real-time</li>
-        </ul>
-      </div>
+  <script>
+    // Fungsi untuk memotong deskripsi
+    function truncate(str, n) {
+      return (str.length > n) ? str.substr(0, n-1) + '…' : str;
+    }
 
-      <div class="campaign-box">
-        <h5>Informasi Penting</h5>
-        <ul>
-          <li>Seluruh materi kampanye dapat diakses secara digital melalui website internal perusahaan.</li>
-          <li>Karyawan diharapkan aktif mengikuti update, membaca poster digital, dan berpartisipasi dalam program-program kampanye.</li>
-          <li>Setiap laporan hazard yang masuk akan ditindaklanjuti secara transparan dan terintegrasi.</li>
-          <li>Feedback dan saran dari karyawan sangat dihargai untuk pengembangan program ke depan.</li>
-        </ul>
-      </div>
+    document.addEventListener('DOMContentLoaded', function() {
+      fetch('https://script.google.com/macros/s/AKfycbws5oAebPM0ynoKT0SlgnnJRNtkRYNgtkUsjQfKAOgMWE7ck6Xn63Dlxf-CexX6d0gu/exec')
+        .then(response => response.json())
+        .then(data => {
+          let gallery = document.getElementById('gallery');
+          let loading = document.getElementById('loading');
+          loading.style.display = 'none';
+          if (!data.length) {
+            gallery.innerHTML = '<div class="col-12 text-center text-muted">Belum ada foto.</div>';
+            return;
+          }
+          data.forEach(function(row) {
+            if(row['Url Foto']) {
+              let col = document.createElement('div');
+              col.className = 'col-12 col-sm-6 col-md-4 col-lg-3';
+              // Potong deskripsi jika terlalu panjang
+              let shortDesc = truncate(row['Diskripsi'] || '', 40);
+              col.innerHTML = `
+                <img src="${row['Url Foto']}" class="gallery-img" alt="" style="cursor:pointer;" data-bs-toggle="modal" data-bs-target="#imgModal" data-img="${row['Url Foto']}" data-desc="${(row['Diskripsi']||'').replace(/"/g, '&quot;')}">
+                <div class="gallery-desc">${shortDesc}</div>
+              `;
+              gallery.appendChild(col);
+            }
+          });
 
-      <div class="text-center mt-5">
-        <h4>Mari kita wujudkan budaya kerja yang</h4>
-        <h2 class="fw-bold text-success">AMAN • EFEKTIF • BERDAYA SAING</h2>
-      </div>
-
-      <div class="text-center mt-4">
-        <p class="mb-2" style="font-weight:500;">
-          Ikuti update dan inspirasi campaign digital kami di Instagram:
-        </p>
-        <a href="https://www.instagram.com/shepjpn.tcmm/" target="_blank" class="btn btn-outline-primary" style="font-weight:600;">
-          <i class="bi bi-instagram"></i> @shepjpn.tcmm
-        </a>
-      </div>
-    </div>    </div>
-  </section>
-
+          // Event delegation untuk gambar
+          gallery.addEventListener('click', function(e) {
+            if(e.target.classList.contains('gallery-img')) {
+              document.getElementById('modalImg').src = e.target.getAttribute('data-img');
+              document.getElementById('modalDesc').innerText = e.target.getAttribute('data-desc');
+            }
+          });
+        });
+    });
+  </script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
