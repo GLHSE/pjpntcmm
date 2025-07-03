@@ -307,6 +307,16 @@
        class="sheet-button" target="_blank">📊 Buka Google Sheet</a>
   </div>
   
+  <div class="stats-grid" style="display: flex; justify-content: center; gap: 30px; margin-bottom: 30px;">
+    <div class="stat-card" style="background: linear-gradient(135deg, #f8fafc 60%, #e0e7ff 100%); padding: 30px 40px; border-radius: 18px; box-shadow: 0 8px 32px rgba(59, 130, 246, 0.10); text-align: center; border: 2px solid #e0e7ff; min-width: 200px;">
+      <div class="stat-number open" id="openCount" style="color: #dc2626; font-size: 2.7rem; font-weight: bold; margin-bottom: 8px;">0</div>
+      <div class="stat-label" style="font-size: 1.05rem; color: #374151; text-transform: uppercase; font-weight: 600; letter-spacing: 1px;">Open</div>
+    </div>
+    <div class="stat-card" style="background: linear-gradient(135deg, #f8fafc 60%, #e0e7ff 100%); padding: 30px 40px; border-radius: 18px; box-shadow: 0 8px 32px rgba(59, 130, 246, 0.10); text-align: center; border: 2px solid #e0e7ff; min-width: 200px;">
+      <div class="stat-number closed" id="closeCount" style="color: #059669; font-size: 2.7rem; font-weight: bold; margin-bottom: 8px;">0</div>
+      <div class="stat-label" style="font-size: 1.05rem; color: #374151; text-transform: uppercase; font-weight: 600; letter-spacing: 1px;">Close</div>
+    </div>
+  </div>
   <div class="table-wrapper">
     <table id="hazardTable">
       <thead>
@@ -333,26 +343,34 @@ const scriptURL = "https://script.google.com/macros/s/AKfycbycRuFZ-xX3qARcwo6EYR
 fetch(scriptURL)
   .then(response => response.json())
   .then(data => {
+    let openCount = 0;
+    let closeCount = 0;
     const tbody = document.querySelector("#hazardTable tbody");
+    tbody.innerHTML = "";
     // Reverse the data array to show latest entries first (bottom to top)
     data.reverse().forEach(row => {
+      if (row.status && row.status.toLowerCase() === 'close') {
+        closeCount++;
+      } else {
+        openCount++;
+      }
       function formatTanggal(tanggalStr) {
-  if (!tanggalStr) return "";
-  // Jika format ISO (misal: 2025-06-24T16:00:00.000Z)
-  if (/^\d{4}-\d{2}-\d{2}/.test(tanggalStr)) {
-    const dateObj = new Date(tanggalStr);
-    const d = String(dateObj.getDate()).padStart(2, '0');
-    const m = String(dateObj.getMonth() + 1).padStart(2, '0');
-    const y = dateObj.getFullYear();
-    return `${d}-${m}-${y}`;
-  }
-  // Jika format sudah YYYY-MM-DD
-  if (/^\d{4}-\d{2}-\d{2}$/.test(tanggalStr)) {
-    const [y, m, d] = tanggalStr.split('-');
-    return `${d}-${m}-${y}`;
-  }
-  return tanggalStr;
-}
+        if (!tanggalStr) return "";
+        // Jika format ISO (misal: 2025-06-24T16:00:00.000Z)
+        if (/^\d{4}-\d{2}-\d{2}/.test(tanggalStr)) {
+          const dateObj = new Date(tanggalStr);
+          const d = String(dateObj.getDate()).padStart(2, '0');
+          const m = String(dateObj.getMonth() + 1).padStart(2, '0');
+          const y = dateObj.getFullYear();
+          return `${d}-${m}-${y}`;
+        }
+        // Jika format sudah YYYY-MM-DD
+        if (/^\d{4}-\d{2}-\d{2}$/.test(tanggalStr)) {
+          const [y, m, d] = tanggalStr.split('-');
+          return `${d}-${m}-${y}`;
+        }
+        return tanggalStr;
+      }
       // Tampilkan tombol "Lihat Foto" yang lebih menarik
       let fotoCell = "-";
       if (row.fotoOpen && row.fotoOpen.trim() !== "") {
@@ -384,6 +402,8 @@ fetch(scriptURL)
       `;
       tbody.appendChild(tr);
     });
+    document.getElementById('openCount').textContent = openCount;
+    document.getElementById('closeCount').textContent = closeCount;
   })
   .catch(error => {
     console.error("Gagal memuat data:", error);
