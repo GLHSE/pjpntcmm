@@ -186,32 +186,95 @@
             overflow-x: auto;
         }
 
+
         table {
             width: 100%;
-            border-collapse: collapse;
+            border-collapse: separate;
+            border-spacing: 0;
+            background: #f8fafc;
+            box-shadow: 0 2px 12px rgba(59,130,246,0.06);
+            border-radius: 16px;
+            overflow: hidden;
         }
+
 
         th, td {
-            padding: 15px;
+            padding: 14px 18px;
             text-align: left;
             border-bottom: 1px solid #e5e7eb;
-        }
-
-        th {
-            background: linear-gradient(135deg, #f8fafc, #e2e8f0);
-            font-weight: 700;
-            color: #374151;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+            vertical-align: middle;
+            white-space: nowrap;
         }
 
         td {
-            font-size: 0.95rem;
+            font-size: 1rem;
+            background: #fff;
+            color: #22223b;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
-        tr:hover {
-            background-color: rgba(59, 130, 246, 0.05);
+        td.site-cell, td.dept-cell, td.kategori-cell, td.status-cell {
+            text-align: center;
+        }
+
+        td.rekomendasi-cell, td.register-cell, td.lampiran-cell {
+            text-align: left;
+        }
+
+        .truncate {
+            max-width: 180px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        th {
+            background: linear-gradient(135deg, #e0e7ff 80%, #f8fafc 100%);
+            font-weight: 700;
+            color: #1e293b;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.7px;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        td {
+            font-size: 1rem;
+            background: #fff;
+        }
+
+        tr:hover td {
+            background-color: #e0e7ff33;
+            transition: background 0.2s;
+        }
+
+        .date-cell {
+            font-weight: 600;
+            color: #1d4ed8;
+            letter-spacing: 0.5px;
+        }
+
+        .lpi-number {
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            background: #e0e7ff;
+            padding: 4px 10px;
+            border-radius: 8px;
+            color: #1d4ed8;
+            font-size: 1rem;
+        }
+
+        .truncate {
+            max-width: 220px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .status-badge {
@@ -711,16 +774,17 @@
                     }
                 }
 
+
                 row.innerHTML = `
-                    <td>📍 ${record.site || ''}</td>
-                    <td>${record.dept || ''}</td>
+                    <td class="site-cell">📍 ${record.site || ''}</td>
+                    <td class="dept-cell">${record.dept || ''}</td>
                     <td class="date-cell">${tglKejadian}</td>
-                    <td class="truncate" title="${record.rekomendasi || ''}">${record.rekomendasi || ''}</td>
-                    <td>${record.kategoriInsiden || ''}</td>
-                    <td><span class="lpi-number">${record.noLPI || ''}</span></td>
-                    <td style="font-size: 0.85rem;">${record.register || ''}</td>
-                    <td>${lampiranCell}</td>
-                    <td>
+                    <td class="rekomendasi-cell truncate" title="${record.rekomendasi || ''}">${record.rekomendasi || ''}</td>
+                    <td class="kategori-cell">${record.kategoriInsiden || ''}</td>
+                    <td class="lpi-number">${record.noLPI || ''}</td>
+                    <td class="register-cell" style="font-size: 0.95rem;">${record.register || ''}</td>
+                    <td class="lampiran-cell">${lampiranCell}</td>
+                    <td class="status-cell">
                         <span class="status-badge ${getStatusClass(record.status)}">
                             ${record.status || 'Unknown'}
                         </span>
