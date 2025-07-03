@@ -418,11 +418,17 @@
         formData.append('location', document.getElementById('location').value);
         formData.append('hazardType', document.getElementById('hazardType').value);
         formData.append('priority', document.querySelector('input[name="priority"]:checked').value);
+        let uploadNotificationShown = false;
         for (let i = 0; i < selectedFiles.length; i++) {
           const file = selectedFiles[i];
           const base64 = await fileToBase64(file);
           formData.append(`file${i}`, base64);
           formData.append(`fileName${i}`, file.name);
+          // Show upload notification after each file is processed (only once)
+          if (!uploadNotificationShown) {
+            showUploadNotification();
+            uploadNotificationShown = true;
+          }
         }
         const response = await fetch(SCRIPT_URL, {
           method: 'POST',
@@ -430,11 +436,26 @@
         });
         const result = await response.text();
         if (result.includes('success')) {
-          showAlert('success', 'Laporan berhasil dikirim ke Google Sheet!');
+          showSuccessReportAlert();
           resetForm();
         } else {
           throw new Error(result);
         }
+    // Show notification after successful file upload (before form submit)
+    function showUploadNotification() {
+      const alert = document.createElement('div');
+      alert.className = 'alert alert-info alert-dismissible fade show';
+      alert.innerHTML = `
+        <i class="fas fa-cloud-upload-alt me-2"></i>
+        File berhasil diunggah!<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+      `;
+      document.getElementById('alertContainer').appendChild(alert);
+      setTimeout(() => {
+        if (alert.parentNode) {
+          alert.remove();
+        }
+      }, 4000);
+    }
       } catch (error) {
         showAlert('danger', 'Gagal mengirim laporan: ' + error.message);
       } finally {
@@ -469,6 +490,34 @@
           alert.remove();
         }
       }, 5000);
+    }
+
+    // Custom alert for report success (more visible)
+    function showSuccessReportAlert() {
+      const alert = document.createElement('div');
+      alert.className = 'alert alert-success alert-dismissible fade show';
+      alert.style.background = '#1a2540';
+      alert.style.color = '#6fffa3';
+      alert.style.fontWeight = 'bold';
+      alert.style.fontSize = '1.5rem';
+      alert.style.boxShadow = '0 0 24px 0 #6fd6ffcc, 0 2px 8px 0 #0a163355';
+      alert.style.border = '2.5px solid #6fd6ff';
+      alert.style.letterSpacing = '1.5px';
+      alert.style.textShadow = '0 2px 8px #0fffc388, 0 1px 2px #0a1633cc';
+      alert.style.zIndex = 2000;
+      alert.style.position = 'relative';
+      alert.style.marginBottom = '1.5rem';
+      alert.innerHTML = `
+        <i class="fas fa-check-circle me-2" style="color:#6fffa3;"></i>
+        <span style="color:#6fffa3;">Laporan <b>berhasil dikirim ke Google Sheet!</b></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+      `;
+      document.getElementById('alertContainer').appendChild(alert);
+      setTimeout(() => {
+        if (alert.parentNode) {
+          alert.remove();
+        }
+      }, 6000);
     }
   </script>
 </body>
