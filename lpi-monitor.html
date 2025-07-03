@@ -1,475 +1,960 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>LPI Report - PT. Prima Jaya Persada Nusantara</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register LPI Monitor - PT. PRIMA JAYA PERSADA NUSANTARA HSE</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #111827;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #1f2937;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .header p {
+            color: #6b7280;
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
+        }
+
+        .btn:disabled {
+            background: #9ca3af;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .btn.secondary {
+            background: linear-gradient(135deg, #6b7280, #4b5563);
+            box-shadow: 0 4px 15px rgba(107, 114, 128, 0.3);
+        }
+
+        .btn.secondary:hover {
+            box-shadow: 0 6px 20px rgba(107, 114, 128, 0.4);
+        }
+
+        .status-card {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 25px;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .status-card.success {
+            border-left: 6px solid #10b981;
+        }
+
+        .status-card.error {
+            border-left: 6px solid #ef4444;
+        }
+
+        .status-card.loading {
+            border-left: 6px solid #f59e0b;
+        }
+
+
+        .stats-grid {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        .stat-card {
+            background: linear-gradient(135deg, #f8fafc 60%, #e0e7ff 100%);
+            padding: 30px 40px;
+            border-radius: 18px;
+            box-shadow: 0 8px 32px rgba(59, 130, 246, 0.10);
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 2px solid #e0e7ff;
+            min-width: 200px;
+        }
+        .stat-card:hover {
+            transform: translateY(-6px) scale(1.03);
+            box-shadow: 0 12px 32px rgba(59, 130, 246, 0.18);
+        }
+        .stat-number {
+            font-size: 2.7rem;
+            font-weight: bold;
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+        }
+        .stat-number.total {
+            color: #2563eb;
+            text-shadow: 0 2px 8px #dbeafe;
+        }
+        .stat-number.open {
+            color: #dc2626;
+            text-shadow: 0 2px 8px #fee2e2;
+        }
+        .stat-number.closed {
+            color: #059669;
+            text-shadow: 0 2px 8px #bbf7d0;
+        }
+        .stat-label {
+            font-size: 1.05rem;
+            color: #374151;
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .data-table-container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+
+        .table-header {
+            padding: 25px;
+            background: linear-gradient(135deg, #f8fafc, #e2e8f0);
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .table-header h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1f2937;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+        }
+
+
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            background: #f8fafc;
+            box-shadow: 0 2px 12px rgba(59,130,246,0.06);
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+
+        th, td {
+            padding: 14px 18px;
+            text-align: left;
+            border-bottom: 1px solid #e5e7eb;
+            vertical-align: middle;
+            white-space: nowrap;
+        }
+
+        td {
+            font-size: 1rem;
+            background: #fff;
+            color: #22223b;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        td.site-cell, td.dept-cell, td.kategori-cell, td.status-cell {
+            text-align: center;
+        }
+
+        td.rekomendasi-cell, td.register-cell, td.lampiran-cell {
+            text-align: left;
+        }
+
+        .truncate {
+            max-width: 180px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        th {
+            background: linear-gradient(135deg, #e0e7ff 80%, #f8fafc 100%);
+            font-weight: 700;
+            color: #1e293b;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.7px;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        td {
+            font-size: 1rem;
+            background: #fff;
+        }
+
+        tr:hover td {
+            background-color: #e0e7ff33;
+            transition: background 0.2s;
+        }
+
+        .date-cell {
+            font-weight: 600;
+            color: #1d4ed8;
+            letter-spacing: 0.5px;
+        }
+
+        .lpi-number {
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            background: #e0e7ff;
+            padding: 4px 10px;
+            border-radius: 8px;
+            color: #1d4ed8;
+            font-size: 1rem;
+        }
+
+        .truncate {
+            max-width: 220px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .status-badge {
+            padding: 6px 16px;
+            border-radius: 25px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .status-open {
+            background: linear-gradient(135deg, #fef2f2, #fee2e2);
+            color: #dc2626;
+            border: 2px solid #fecaca;
+        }
+
+        .status-closed {
+            background: linear-gradient(135deg, #f0fdf4, #dcfce7);
+            color: #059669;
+            border: 2px solid #bbf7d0;
+        }
+
+        .status-progress {
+            background: linear-gradient(135deg, #fffbeb, #fef3c7);
+            color: #d97706;
+            border: 2px solid #fed7aa;
+        }
+
+        .status-unknown {
+            background: linear-gradient(135deg, #f9fafb, #f3f4f6);
+            color: #6b7280;
+            border: 2px solid #d1d5db;
+        }
+
+        .spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-top: 3px solid #ffffff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .debug-panel {
+            background: rgba(31, 41, 55, 0.95);
+            color: #f9fafb;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 20px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            max-height: 400px;
+            overflow-y: auto;
+            display: none;
+            backdrop-filter: blur(10px);
+        }
+
+        /* Document Actions Styles */
+        .doc-actions {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .doc-btn {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.2s;
+        }
+
+        .doc-btn.view {
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            color: white;
+        }
+
+        .doc-btn.view:hover {
+            background: linear-gradient(135deg, #2563eb, #1e40af);
+            transform: translateY(-1px);
+        }
+
+        .doc-btn.download {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+        }
+
+        .doc-btn.download:hover {
+            background: linear-gradient(135deg, #059669, #047857);
+            transform: translateY(-1px);
+        }
+
+        .truncate {
+            max-width: 250px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .last-update {
+            font-size: 0.9rem;
+            color: #6b7280;
+            font-style: italic;
+        }
+
+        .date-cell {
+            font-weight: 600;
+            color: #1f2937;
+        }
+
+        .lpi-number {
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            background: rgba(59, 130, 246, 0.1);
+            padding: 4px 8px;
+            border-radius: 6px;
+            color: #1d4ed8;
+        }
+
+        /* Loading overlay */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(102, 126, 234, 0.9);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            backdrop-filter: blur(10px);
+        }
+
+        .loading-spinner {
+            width: 60px;
+            height: 60px;
+            border: 6px solid rgba(255, 255, 255, 0.3);
+            border-top: 6px solid #ffffff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+
+        .loading-text {
+            color: white;
+            font-size: 1.2rem;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 8px;
+            }
+            .header {
+                padding: 16px 8px;
+                margin-bottom: 18px;
+            }
+            .header h1 {
+                font-size: 1.3rem;
+                margin-bottom: 6px;
+            }
+            .header p {
+                font-size: 0.95rem;
+                margin-bottom: 8px;
+            }
+            .stats-grid {
+                flex-direction: column;
+                gap: 12px;
+            }
+            .stat-card {
+                padding: 18px 10px;
+                min-width: unset;
+            }
+            .stat-number {
+                font-size: 1.3rem;
+            }
+            .stat-label {
+                font-size: 0.9rem;
+            }
+            .controls {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 8px;
+                margin-bottom: 18px;
+            }
+            .btn {
+                width: 100%;
+                padding: 12px 0;
+                font-size: 0.98rem;
+            }
+            .status-card {
+                padding: 14px 8px;
+                font-size: 0.98rem;
+            }
+            .data-table-container {
+                border-radius: 10px;
+            }
+            .table-header {
+                padding: 12px 8px;
+            }
+            .table-header h2 {
+                font-size: 1.05rem;
+            }
+            .table-wrapper {
+                overflow-x: auto;
+            }
+            th, td {
+                padding: 7px 6px;
+                font-size: 0.78rem;
+            }
+            .truncate {
+                max-width: 90px;
+            }
+            .doc-actions {
+                flex-direction: column;
+                gap: 4px;
+            }
+            .status-badge {
+                padding: 4px 10px;
+                font-size: 0.7rem;
+            }
+            .lpi-number {
+                font-size: 0.85rem;
+                padding: 2px 5px;
+            }
+            .last-update {
+                font-size: 0.8rem;
+            }
+            /* Navigation buttons */
+            .mobile-nav-btns {
+                flex-direction: column !important;
+                align-items: stretch !important;
+                gap: 8px !important;
+            }
+        }
+    </style>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-  <style>
-    .upload-area {
-      border: 2px dashed #6fd6ff;
-      border-radius: 14px;
-      padding: 30px;
-      text-align: center;
-      background-color: #22335a;
-      transition: all 0.3s ease;
-      cursor: pointer;
-      color: #e0e7ff;
-      font-weight: 600;
-    }
-    .upload-area:hover {
-      border-color: #4f8cff;
-      background-color: #2a406b;
-      color: #fff;
-    }
-    .upload-area.dragover {
-      border-color: #6fffa3;
-      background-color: #1e2a47;
-      color: #fff;
-    }
-    .preview-image {
-      max-width: 100%;
-      max-height: 200px;
-      border-radius: 8px;
-      margin: 10px;
-      border: 2px solid #4f8cff;
-      background: #22335a;
-    }
-    .loading-overlay {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(10,22,51,0.85);
-      z-index: 9999;
-    }
-    .loading-spinner {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      color: #6fd6ff;
-      text-align: center;
-    }
-
-    /* Card and form contrast improvements */
-    .card {
-      background: rgba(34, 51, 90, 0.98) !important;
-      border: 1.5px solid #6fd6ff !important;
-      box-shadow: 0 8px 36px 0 #0a1633cc;
-    }
-    .card-header {
-      background: linear-gradient(90deg, #22335a 0%, #2b4a7a 100%) !important;
-      color: #fff !important;
-      border-bottom: 1.5px solid #6fd6ff !important;
-      font-weight: 700;
-      letter-spacing: 0.5px;
-      text-shadow: 0 1px 2px #0a1633cc;
-    }
-    .form-label, .form-check-label {
-      color: #f8fafc !important;
-      font-weight: 700;
-      letter-spacing: 0.5px;
-      text-shadow: 0 1px 2px #0a1633cc;
-    }
-    .form-control, .form-select {
-      background: #1a2540 !important;
-      color: #e0e7ff !important;
-      border: 1.5px solid #4f8cff !important;
-      font-weight: 500;
-      box-shadow: 0 2px 8px 0 #0a163355;
-    }
-    .form-control:focus, .form-select:focus {
-      background: #22335a !important;
-      color: #fff !important;
-      border-color: #6fd6ff !important;
-      box-shadow: 0 0 0 2px #6fd6ff55;
-    }
-    .form-control::placeholder {
-      color: #e0e7ff !important;
-      opacity: 1;
-      font-weight: 500;
-      letter-spacing: 0.5px;
-    }
-    .form-check-input:checked {
-      background-color: #4f8cff !important;
-      border-color: #6fd6ff !important;
-      box-shadow: 0 0 0 2px #6fd6ff55;
-    }
-    .form-check-input {
-      background: #1a2540 !important;
-      border: 1.5px solid #4f8cff !important;
-    }
-    .form-check-label.text-danger {
-      color: #ff4d6d !important;
-      font-weight: 800;
-      text-shadow: 0 1px 2px #0a1633cc;
-    }
-    .form-check-label.text-success {
-      color: #6fffa3 !important;
-      font-weight: 800;
-      text-shadow: 0 1px 2px #0a1633cc;
-    }
-    .btn-gradient-primary {
-      background: linear-gradient(90deg, #4f8cff 0%, #6fd6ff 100%) !important;
-      color: #fff !important;
-      font-weight: 700;
-      border: none !important;
-      box-shadow: 0 2px 8px 0 #0a163355;
-    }
-    .btn-gradient-primary:hover, .btn-gradient-primary:focus {
-      background: linear-gradient(90deg, #6fd6ff 0%, #4f8cff 100%) !important;
-      color: #fff !important;
-      box-shadow: 0 4px 16px 0 #6fd6ff55;
-    }
-    .btn-outline-secondary {
-      color: #e0e7ff !important;
-      border-color: #6fd6ff !important;
-      background: transparent !important;
-      font-weight: 600;
-    }
-    .btn-outline-secondary:hover, .btn-outline-secondary:focus {
-      background: #22335a !important;
-      color: #6fd6ff !important;
-      border-color: #4f8cff !important;
-    }
-    .badge {
-      background: linear-gradient(90deg, #4f8cff 0%, #6fd6ff 100%) !important;
-      color: #fff !important;
-      font-weight: 800;
-      font-size: 1rem;
-      letter-spacing: 0.5px;
-      box-shadow: 0 2px 8px 0 #0a163355;
-      text-shadow: 0 1px 2px #0a1633cc;
-    }
-    /* Placeholder text color for better contrast */
-    ::placeholder {
-      color: #e0e7ff !important;
-      opacity: 1;
-      font-weight: 500;
-      letter-spacing: 0.5px;
-    }
-    /* Date input icon color fix for dark bg */
-    input[type="date"]::-webkit-calendar-picker-indicator {
-      filter: invert(1);
-    }
-    /* Alert contrast */
-    .alert {
-      background: #22335a !important;
-      color: #fff !important;
-      border: 1.5px solid #4f8cff !important;
-      font-weight: 600;
-      box-shadow: 0 2px 8px 0 #0a163355;
-    }
-    .alert-success {
-      background: #22335a;
-      color: #6fd6ff;
-      border-color: #6fd6ff;
-    }
-    .alert-danger {
-      background: #2a1e2e;
-      color: #ff4d6d;
-      border-color: #ff4d6d;
-    }
-    .alert-warning {
-      background: #3a2e1e;
-      color: #ffe066;
-      border-color: #ffe066;
-    }
-    /* Scrollbar styling for dark mode */
-    ::-webkit-scrollbar {
-      width: 10px;
-      background: #1a2540;
-    }
-    ::-webkit-scrollbar-thumb {
-      background: #4f8cff;
-      border-radius: 8px;
-    }
-    ::-webkit-scrollbar-thumb:hover {
-      background: #6fd6ff;
-    }
-  </style>
 </head>
-<body style="background: linear-gradient(120deg, #23395d 0%, #1e2a47 100%); min-height: 100vh; font-family: 'Segoe UI', 'Roboto', Arial, sans-serif; color: #eaf2ff;">
-  <div class="loading-overlay" id="loadingOverlay">
-    <div class="loading-spinner">
-      <div class="spinner-border text-primary" role="status">
-        <span class="visually-hidden">Loading...</span>
+<body>
+  <!-- Overlay Password -->
+  <div id="passwordOverlay" style="position:fixed;z-index:99999;top:0;left:0;width:100vw;height:100vh;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);display:flex;align-items:center;justify-content:center;">
+    <div style="background:#fff;padding:40px 30px 30px 30px;border-radius:18px;box-shadow:0 8px 32px rgba(0,0,0,0.25);text-align:center;max-width:350px;width:90%;">
+      <div style="font-size:2.5rem;color:#007BFF;margin-bottom:10px;">
+        <i class="fas fa-lock"></i>
       </div>
-      <div class="mt-3">
-        <h5 class="fw-bold text-primary">Menyimpan ke Google Sheet...</h5>
-        <p class="text-secondary">Mohon tunggu sebentar</p>
+      <h3 style="margin-bottom:18px;font-weight:bold;color:#333;">Halaman Terkunci</h3>
+      <form id="passwordForm">
+        <input type="password" id="pagePassword" class="form-control mb-3" placeholder="Masukkan Password" style="font-size:1.2rem;text-align:center;" required autocomplete="off">
+        <button type="submit" class="btn btn-primary w-100" style="font-weight:bold;font-size:1.1rem;">Buka Halaman</button>
+        <div id="passwordError" style="color:#dc3545;margin-top:10px;display:none;">Password salah, coba lagi!</div>
+      </form>
+      <div style="margin-top:18px;color:#888;font-size:0.95rem;">
+        <span id="passwordStatusIcon" style="display:inline"></span>
+        <span id="passwordStatusText" style="display:inline"></span>
       </div>
-    </div>
-  </div>
-  <div class="container my-5">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-      <div>
-        <h2 class="mb-2 fw-bold text-white" style="letter-spacing: 1px;">
-          <i class="fas fa-clipboard-list text-info me-2"></i>LPI Report
-        </h2>
-        <p class="mb-0 fs-5" style="color:#e0e7ff;">
-          <span class="fw-semibold">Sistem Pelaporan LPI</span>
-          <span class="badge bg-gradient bg-primary bg-opacity-50 text-white ms-2 shadow-sm">Google Sheet Integration</span>
-        </p>
-      </div>
-            <div>
-                <a href="index.html" class="btn btn-outline-secondary px-4 py-2 fw-semibold shadow-sm" style="border-radius: 8px;">
-                    <i class="fas fa-home me-2"></i>Kembali ke Beranda
-                </a>
-            </div>
-    </div>
-    <div id="alertContainer"></div>
-    <div class="card mb-4 shadow-lg border-0 rounded-4" style="background:rgba(30,42,71,0.97);">
-      <div class="card-header bg-primary bg-opacity-10 border-0 rounded-top-4 d-flex align-items-center">
-        <i class="fas fa-plus-circle me-2 text-primary fs-4"></i>
-        <h5 class="mb-0 fw-semibold text-white flex-grow-1">Form LPI Report</h5>
-      </div>
-      <div class="card-body p-4">
-        <form id="hazardReportForm">
-          <div class="row g-4">
-            <div class="col-md-4">
-              <div class="mb-3">
-                <label for="reporterName" class="form-label fw-semibold text-secondary">
-                  <i class="fas fa-lock me-1"></i>Site*
-                </label>
-                <input type="text" class="form-control bg-light border-0 rounded-3 shadow-sm" id="reporterName" value="TCMM" readonly required tabindex="-1" style="pointer-events: none; user-select: none;">
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="mb-3">
-                <label for="dept" class="form-label fw-semibold text-secondary">
-                  <i class="fas fa-lock me-1"></i>Dept
-                </label>
-                <input type="text" class="form-control bg-light border-0 rounded-3 shadow-sm" id="dept" value="SHE" readonly required tabindex="-1" style="pointer-events: none; user-select: none;">
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="mb-3">
-                <label for="reportDate" class="form-label fw-semibold text-secondary">
-                  <i class="fas fa-calendar me-1"></i>Tanggal Pelaporan *
-                </label>
-                <input type="date" class="form-control border-0 bg-light rounded-3 shadow-sm" id="reportDate" required>
-              </div>
-            </div>
-          </div>
-          <div class="mb-3">
-            <label for="location" class="form-label fw-semibold text-secondary">
-              <i class="fas fa-lightbulb me-1"></i>Rekomendasi / Action Plan *
-            </label>
-            <input type="text" class="form-control border-0 bg-light rounded-3 shadow-sm" id="location" placeholder="Contoh : Dilakukan coaching & counseling" required>
-          </div>
-          <div class="mb-3">
-            <label for="hazardType" class="form-label fw-semibold text-secondary">
-              <i class="fas fa-exclamation-circle me-1"></i>Kategori Insiden *
-            </label>
-            <select class="form-select border-0 bg-light rounded-3 shadow-sm" id="hazardType" required>
-              <option value="">Pilih Kategori Insiden</option>
-              <option value="property_damage">Property Damage</option>
-              <option value="injury_incident">Injury Incident</option>
-              <option value="environment">Environment</option>
-              <option value="other">Other</option>
-            </select>
-          </div>
-          <div class="mb-3">
-            <label for="priority" class="form-label fw-semibold text-secondary">
-              <i class="fas fa-flag me-1"></i>Status *
-            </label>
-            <div class="row">
-              <div class="col-md-6">
-                <div class="form-check">
-                  <input class="form-check-input" type="radio" name="priority" id="priorityHigh" value="Open" required>
-                  <label class="form-check-label text-danger fw-semibold" for="priorityHigh">
-                    <i class="fas fa-door-open me-1"></i>Open
-                  </label>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="form-check">
-                  <input class="form-check-input" type="radio" name="priority" id="priorityMedium" value="Close" required>
-                  <label class="form-check-label text-success fw-semibold" for="priorityMedium">
-                    <i class="fas fa-door-closed me-1"></i>Close
-                  </label>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="mb-3">
-            <label class="form-label fw-semibold text-secondary">
-              <i class="fas fa-camera me-1"></i>Upload Foto Bukti
-            </label>
-            <div class="upload-area shadow-sm" id="uploadArea">
-              <i class="fas fa-file-upload fa-3x text-primary mb-3"></i>
-              <h6 class="fw-semibold">Klik untuk memilih file</h6>
-              <p class="text-muted">Format: JPG, PNG, GIF, PDF (Max 5MB)</p>
-              <input type="file" id="fileInput" multiple accept="image/*,application/pdf" style="display: none;">
-            </div>
-            <div id="imagePreview" class="mt-3"></div>
-          </div>
-          <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-            <button type="button" class="btn btn-outline-secondary me-md-2 px-4 py-2 fw-semibold shadow-sm" onclick="resetForm()">
-              <i class="fas fa-undo me-2"></i>Reset
-            </button>
-            <button type="submit" class="btn btn-gradient-primary px-4 py-2 fw-semibold shadow-sm" style="background: linear-gradient(90deg, #4f8cff 0%, #6fd6ff 100%); color: #fff; border: none;">
-              <i class="fas fa-paper-plane me-2"></i>Kirim ke Google Sheet
-            </button>
-          </div>
-        </form>
+      <div style="margin-top:22px;">
+        <a href="index.html" style="display:inline-block; padding:8px 20px; background-color:#6c757d; color:white; text-decoration:none; border-radius:5px; font-weight:bold;">
+          ← Kembali ke Beranda
+        </a>
       </div>
     </div>
   </div>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <script>
-    // Google Apps Script Web App URL - UPDATE SETELAH DEPLOY
-    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzw_nQicy_hVaGwWCRETq3Eu7Mtg_Opnqsh9Qq5SI28pMYHf3IIAd94v8GS_oGolm9V2w/exec';
-    // Set default date to today
-    document.addEventListener('DOMContentLoaded', () => {
-      document.getElementById('reportDate').valueAsDate = new Date();
-    });
-    // File upload handling
-    const uploadArea = document.getElementById('uploadArea');
-    const fileInput = document.getElementById('fileInput');
-    const imagePreview = document.getElementById('imagePreview');
-    let selectedFiles = [];
-    uploadArea.addEventListener('click', () => fileInput.click());
-    uploadArea.addEventListener('dragover', (e) => {
-      e.preventDefault();
-      uploadArea.classList.add('dragover');
-    });
-    uploadArea.addEventListener('dragleave', () => {
-      uploadArea.classList.remove('dragover');
-    });
-    uploadArea.addEventListener('drop', (e) => {
-      e.preventDefault();
-      uploadArea.classList.remove('dragover');
-      handleFiles(e.dataTransfer.files);
-    });
-    fileInput.addEventListener('change', (e) => {
-      handleFiles(e.target.files);
-    });
-    function handleFiles(files) {
-      let fileArray = Array.from(files).filter(file => {
-        if (file.size > 5 * 1024 * 1024) {
-          showAlert('warning', `File ${file.name} terlalu besar (max 5MB)`);
-          return false;
-        }
-        // Terima gambar dan PDF
-        return file.type.startsWith('image/') || file.type === 'application/pdf';
-      });
-      if (selectedFiles.length + fileArray.length > 2) {
-        showAlert('warning', 'Maksimal hanya boleh upload 2 file (foto/PDF).');
-        fileArray = fileArray.slice(0, 2 - selectedFiles.length);
-      }
-      selectedFiles = selectedFiles.concat(fileArray).slice(0, 2);
-      displayImagePreviews();
-    }
-    function displayImagePreviews() {
-      imagePreview.innerHTML = '';
-      selectedFiles.forEach((file, index) => {
-        const div = document.createElement('div');
-        div.className = 'd-inline-block position-relative me-2 mb-2';
-        if (file.type === 'application/pdf') {
-          div.innerHTML = `
-            <div class="d-flex align-items-center justify-content-center" style="height: 60px; width: 60px; background: #1a2540; border-radius: 8px; border: 2px solid #4f8cff;">
-              <i class="fas fa-file-pdf fa-2x text-danger"></i>
-            </div>
-            <div class="text-center mt-1" style="max-width:80px; color:#e0e7ff; font-size:0.85em; word-break:break-all;">${file.name}</div>
-            <button type="button" class="btn btn-danger btn-sm position-absolute top-0 end-0" onclick="removeImage(${index})" style="transform: translate(50%, -50%);">
-              <i class="fas fa-times"></i>
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">
+            <div>🚀 Loading LPI Monitor</div>
+            <div style="font-size: 0.9rem; margin-top: 10px; opacity: 0.8;">Fetching data from Google Sheets...</div>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>📋 Register LPI Monitor</h1>
+            <p>PT. PRIMA JAYA PERSADA NUSANTARA HSE</p>
+            <div id="lastUpdate" class="last-update"></div>
+        </div>
+
+        <!-- Controls -->
+        <div class="controls" style="display:none;">
+            <button class="btn" id="refreshBtn" onclick="fetchData()">
+                <span class="spinner" id="spinner" style="display: none;"></span>
+                <span id="refreshText">🔄 Refresh Data</span>
             </button>
-          `;
-        } else {
-          const reader = new FileReader();
-          reader.onload = (e) => {
-            div.innerHTML = `
-              <img src="${e.target.result}" class="preview-image" alt="Preview">
-              <button type="button" class="btn btn-danger btn-sm position-absolute top-0 end-0" onclick="removeImage(${index})" style="transform: translate(50%, -50%);">
-                <i class="fas fa-times"></i>
-              </button>
-            `;
-          };
-          reader.readAsDataURL(file);
-        }
-        imagePreview.appendChild(div);
+            <button class="btn secondary" onclick="testConnection()">🔗 Test Connection</button>
+            <button class="btn secondary" onclick="toggleDebug()">🔧 Debug</button>
+        </div>
+
+        <!-- Status -->
+        <div class="status-card loading" id="statusCard">
+            <h3 id="statusTitle">📊 Loading Data</h3>
+            <p id="statusMessage">Fetching LPI records from Google Sheets...</p>
+        </div>
+
+        <!-- Statistics -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number total" id="totalRecords">0</div>
+                <div class="stat-label">Total Records</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number open" id="openCases">0</div>
+                <div class="stat-label">Open Cases</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number closed" id="closedCases">0</div>
+                <div class="stat-label">Closed Cases</div>
+            </div>
+        </div>
+
+        <!-- LPI Report Button -->
+
+        <!-- Navigation Buttons -->
+        <div class="mobile-nav-btns" style="display: flex; flex-direction: column; align-items: flex-end; gap: 10px; margin-bottom: 20px; width: 100%;">
+            <a href="index.html" class="btn" style="background: linear-gradient(90deg, #10b981 0%, #3b82f6 100%); color: #fff; font-weight: 700; border-radius: 10px; box-shadow: 0 4px 16px #10b98144, 0 2px 8px #3b82f644; text-decoration: none; display: inline-flex; align-items: center; gap: 10px; font-size: 1.08rem; padding: 13px 28px; transition: all 0.2s; width: 100%; justify-content: center;">
+                <i class="fas fa-home"></i> Kembali ke Beranda
+            </a>
+            <a href="lpi-report.html" class="btn" style="background: linear-gradient(90deg, #4f8cff 0%, #6fd6ff 100%); color: #fff; font-weight: 700; border-radius: 10px; box-shadow: 0 4px 16px #4f8cff44, 0 2px 8px #6fd6ff44; text-decoration: none; display: inline-flex; align-items: center; gap: 10px; font-size: 1.08rem; padding: 13px 28px; transition: all 0.2s; width: 100%; justify-content: center;">
+                <i class="fas fa-file-alt"></i> LPI Report
+            </a>
+        </div>
+
+        <!-- Data Table -->
+        <div class="data-table-container">
+            <div class="table-header">
+                <h2>📊 LPI Records Data</h2>
+            </div>
+            <div class="table-wrapper">
+                <table id="dataTable" style="display: none;">
+                    <thead>
+                        <tr>
+                            <th>Site</th>
+                            <th>Dept</th>
+                            <th>Tgl Kejadian</th>
+                            <th>Rekomendasi</th>
+                            <th>Kategori</th>
+                            <th>No LPI</th>
+                            <th>Register</th>
+                            <th>Lampiran</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody">
+                    </tbody>
+                </table>
+                <div id="noDataMessage" style="display: none; text-align: center; padding: 50px; color: #6b7280;">
+                    <div style="font-size: 4rem; margin-bottom: 20px;">📭</div>
+                    <h3>No Data Available</h3>
+                    <p style="margin-top: 10px;">No LPI records found in the spreadsheet</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Debug Panel -->
+        <div class="debug-panel" id="debugPanel"></div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+    <script>
+    // Ganti URL berikut dengan endpoint Apps Script Anda
+    const PASSWORD_URL = 'https://script.google.com/macros/s/AKfycbxxYUN_3krrxmqVBcdFHuVUn0oJmXTOfDMHo8jKe0Rxd9AZS8fPVogtAUDrNZPuu_9mzg/exec';
+
+    let sheetPassword = null;
+    document.getElementById('passwordStatusIcon').innerHTML = '<i class="fas fa-exclamation-circle fa-warning-icon"></i>';
+    document.getElementById('passwordStatusIcon').style.color = 'orange';
+    document.getElementById('passwordStatusText').textContent = 'Tidak terhubung ke server';
+    document.getElementById('passwordStatusText').className = 'text-warning';
+    document.getElementById('passwordStatusText').style.display = 'inline';
+
+    // Ambil password dari endpoint
+    fetch(PASSWORD_URL)
+      .then(r => r.json())
+      .then(data => {
+        sheetPassword = data.password;
+        // Jika sukses, ubah ke status hijau
+        document.getElementById('passwordStatusIcon').innerHTML = '<i class="fas fa-check-circle"></i>';
+        document.getElementById('passwordStatusIcon').style.color = 'green';
+        document.getElementById('passwordStatusText').textContent = 'Password terhubung';
+        document.getElementById('passwordStatusText').className = 'text-success';
+        document.getElementById('passwordStatusText').style.display = 'inline';
+      })
+      .catch((err) => {
+        // Jika gagal, biarkan status "tidak terhubung" tetap tampil
+        console.error('Password fetch error:', err);
+        sheetPassword = null;
       });
-    }
-    function removeImage(index) {
-      selectedFiles.splice(index, 1);
-      displayImagePreviews();
-    }
-    document.getElementById('hazardReportForm').addEventListener('submit', async (e) => {
+
+    // Lindungi halaman dengan overlay password
+    document.getElementById('passwordForm').addEventListener('submit', function(e) {
       e.preventDefault();
-      document.getElementById('uploadSuccessAlert')?.classList.add('d-none');
-      if (SCRIPT_URL.includes('YOUR_SCRIPT_ID') || SCRIPT_URL === 'PASTE_YOUR_DEPLOYED_WEBAPP_URL_HERE') {
-        showAlert('warning', 'Google Apps Script belum dikonfigurasi. Silakan setup terlebih dahulu.');
-        return;
+      const pwdInput = document.getElementById('pagePassword');
+      const errBox = document.getElementById('passwordError');
+      if (sheetPassword && pwdInput.value === sheetPassword) {
+        document.getElementById('passwordOverlay').style.display = 'none';
+        pwdInput.value = '';
+        errBox.style.display = 'none';
+      } else {
+        errBox.style.display = 'block';
+        pwdInput.value = '';
+        pwdInput.focus();
       }
-      document.getElementById('loadingOverlay').style.display = 'block';
-      try {
-        const formData = new FormData();
-        // Tambahkan timestamp lokal (ISO string) ke kolom A
-        formData.append('timestamp', new Date().toISOString());
-        formData.append('reporterName', 'TCMM');
-        formData.append('dept','SHE'); // Tambahkan dept
-        formData.append('reportDate', document.getElementById('reportDate').value);
-        formData.append('location', document.getElementById('location').value);
-        formData.append('hazardType', document.getElementById('hazardType').value);
-        formData.append('priority', document.querySelector('input[name="priority"]:checked').value);
-        for (let i = 0; i < selectedFiles.length; i++) {
-          const file = selectedFiles[i];
-          const base64 = await fileToBase64(file);
-          formData.append(`file${i}`, base64);
-          formData.append(`fileName${i}`, file.name);
+    });
+        // URL Google Apps Script Anda
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx3dxlGm0g2Yw7o2tLXgtE15_BdLrmebT5aL0SIvDslnNth7z-nW4R_JAOxrCrYzo2kpw/exec';
+        
+        let currentData = [];
+        let debugVisible = false;
+
+        function log(message) {
+            const debugPanel = document.getElementById('debugPanel');
+            const timestamp = new Date().toLocaleTimeString();
+            debugPanel.innerHTML += `[${timestamp}] ${message}<br>`;
+            debugPanel.scrollTop = debugPanel.scrollHeight;
+            console.log(message);
         }
-        const response = await fetch(SCRIPT_URL, {
-          method: 'POST',
-          body: formData
+
+        function toggleDebug() {
+            debugVisible = !debugVisible;
+            document.getElementById('debugPanel').style.display = debugVisible ? 'block' : 'none';
+            if (debugVisible) {
+                log('🔧 Debug mode enabled');
+            }
+        }
+
+        function hideLoadingOverlay() {
+            const overlay = document.getElementById('loadingOverlay');
+            overlay.style.opacity = '0';
+            setTimeout(() => {
+                overlay.style.display = 'none';
+            }, 300);
+        }
+
+        function updateStatus(title, message, type = 'loading') {
+            const statusCard = document.getElementById('statusCard');
+            const statusTitle = document.getElementById('statusTitle');
+            const statusMessage = document.getElementById('statusMessage');
+            
+            statusTitle.textContent = title;
+            statusMessage.textContent = message;
+            statusCard.className = `status-card ${type}`;
+        }
+
+        function updateStats() {
+            const total = currentData.length;
+            const open = currentData.filter(item => 
+                item.status && item.status.toLowerCase().includes('open')
+            ).length;
+            const closed = currentData.filter(item => 
+                item.status && item.status.toLowerCase().includes('closed')
+            ).length;
+
+            document.getElementById('totalRecords').textContent = total;
+            document.getElementById('openCases').textContent = open;
+            document.getElementById('closedCases').textContent = closed;
+        }
+
+        // Fungsi untuk mengkonversi Google Drive URL ke format yang bisa diakses
+        function convertGoogleDriveUrl(url) {
+            if (!url || !url.includes('drive.google.com')) {
+                return url;
+            }
+
+            // Extract file ID from various Google Drive URL formats
+            let fileId = '';
+            
+            if (url.includes('/file/d/')) {
+                fileId = url.split('/file/d/')[1].split('/')[0];
+            } else if (url.includes('id=')) {
+                fileId = url.split('id=')[1].split('&')[0];
+            } else if (url.includes('/open?id=')) {
+                fileId = url.split('/open?id=')[1].split('&')[0];
+            }
+
+            if (fileId) {
+                return {
+                    view: `https://drive.google.com/file/d/${fileId}/view`,
+                    download: `https://drive.google.com/uc?export=download&id=${fileId}`
+                };
+            }
+
+            return { view: url, download: url };
+        }
+
+        function updateTable() {
+            const tableBody = document.getElementById('tableBody');
+            const dataTable = document.getElementById('dataTable');
+            const noDataMessage = document.getElementById('noDataMessage');
+
+            if (currentData.length === 0) {
+                dataTable.style.display = 'none';
+                noDataMessage.style.display = 'block';
+                return;
+            }
+
+            dataTable.style.display = 'table';
+            noDataMessage.style.display = 'none';
+            tableBody.innerHTML = '';
+
+            currentData.forEach((record, index) => {
+                const row = document.createElement('tr');
+
+                // Format lampiran dengan hanya Open dan Download
+                let lampiranCell = '';
+                if (record.lampiran && record.lampiran.includes('http')) {
+                    const convertedUrls = convertGoogleDriveUrl(record.lampiran);
+                    lampiranCell = `
+                        <div class="doc-actions">
+                            <a href="${convertedUrls.view}" target="_blank" class="doc-btn view">
+                                📄 Open
+                            </a>
+                            <a href="${convertedUrls.download}" target="_blank" class="doc-btn download">
+                                💾 Download
+                            </a>
+                        </div>
+                    `;
+                } else if (record.lampiran && record.lampiran.trim() !== '') {
+                    lampiranCell = record.lampiran;
+                } else {
+                    lampiranCell = '<span style="color: #9ca3af;">No attachment</span>';
+                }
+
+
+                // Format tanggal kejadian ke DD-MM-YYYY (hanya tanggal saja)
+                let tglKejadian = record.tglKejadian || '';
+                // Jika string adalah Date (misal: "Thu Jul 03 2025 00:00:00 GMT+0800 (Waktu Indonesia Tengah)")
+                if (tglKejadian && isNaN(Number(tglKejadian)) && tglKejadian.match(/[A-Za-z]{3} [A-Za-z]{3} [0-9]{2} [0-9]{4}/)) {
+                    // Parse ke Date object
+                    let dateObj = new Date(tglKejadian);
+                    if (!isNaN(dateObj.getTime())) {
+                        let dd = String(dateObj.getDate()).padStart(2, '0');
+                        let mm = String(dateObj.getMonth() + 1).padStart(2, '0');
+                        let yyyy = dateObj.getFullYear();
+                        tglKejadian = `${dd}-${mm}-${yyyy}`;
+                    }
+                } else if (tglKejadian && (tglKejadian.includes('-') || tglKejadian.includes('/'))) {
+                    // Format YYYY-MM-DD atau YYYY/MM/DD
+                    let parts = tglKejadian.split(/[-\/]/);
+                    if (parts.length === 3 && parts[0].length === 4) {
+                        tglKejadian = `${parts[2]}-${parts[1]}-${parts[0]}`;
+                    }
+                }
+
+
+                row.innerHTML = `
+                    <td class="site-cell">📍 ${record.site || ''}</td>
+                    <td class="dept-cell">${record.dept || ''}</td>
+                    <td class="date-cell">${tglKejadian}</td>
+                    <td class="rekomendasi-cell truncate" title="${record.rekomendasi || ''}">${record.rekomendasi || ''}</td>
+                    <td class="kategori-cell">${record.kategoriInsiden || ''}</td>
+                    <td class="lpi-number">${record.noLPI || ''}</td>
+                    <td class="register-cell" style="font-size: 0.95rem;">${record.register || ''}</td>
+                    <td class="lampiran-cell">${lampiranCell}</td>
+                    <td class="status-cell">
+                        <span class="status-badge ${getStatusClass(record.status)}">
+                            ${record.status || 'Unknown'}
+                        </span>
+                    </td>
+                `;
+
+                tableBody.appendChild(row);
+            });
+        }
+
+        function getStatusClass(status) {
+            if (!status) return 'status-unknown';
+            
+            const statusLower = status.toLowerCase();
+            if (statusLower.includes('open')) return 'status-open';
+            if (statusLower.includes('closed')) return 'status-closed';
+            if (statusLower.includes('progress') || statusLower.includes('proses')) return 'status-progress';
+            return 'status-unknown';
+        }
+
+        function updateLastUpdate() {
+            const lastUpdate = document.getElementById('lastUpdate');
+            const now = new Date();
+            lastUpdate.textContent = `Last updated: ${now.toLocaleString('id-ID')}`;
+        }
+
+        async function testConnection() {
+            log('🔗 Testing connection to: ' + SCRIPT_URL);
+            updateStatus('🔗 Testing Connection', 'Checking if API is accessible...', 'loading');
+
+            try {
+                const response = await fetch(SCRIPT_URL + '?test=1');
+                log('📡 Response status: ' + response.status);
+                
+                const text = await response.text();
+                log('📄 Response text: ' + text);
+
+                if (response.ok && text.includes('LPI Monitor API is working')) {
+                    updateStatus('✅ Connection Success', 'API is working properly!', 'success');
+                    log('✅ Connection test successful');
+                } else {
+                    updateStatus('❌ Connection Failed', `HTTP ${response.status}: ${text}`, 'error');
+                    log('❌ Connection test failed');
+                }
+            } catch (error) {
+                log('❌ Connection error: ' + error.message);
+                updateStatus('❌ Connection Error', error.message, 'error');
+            }
+        }
+
+        async function fetchData() {
+            const refreshBtn = document.getElementById('refreshBtn');
+            const spinner = document.getElementById('spinner');
+            const refreshText = document.getElementById('refreshText');
+
+            // Show loading state
+            refreshBtn.disabled = true;
+            spinner.style.display = 'inline-block';
+            refreshText.textContent = 'Loading...';
+
+            log('📊 Fetching LPI data...');
+            updateStatus('📊 Loading Data', 'Fetching records from Google Sheets...', 'loading');
+
+            try {
+                const response = await fetch(SCRIPT_URL);
+                const text = await response.text();
+                
+                log('📄 Raw response: ' + text.substring(0, 500) + '...');
+
+                const result = JSON.parse(text);
+                log('📋 Parsed result: ' + JSON.stringify(result, null, 2).substring(0, 500) + '...');
+
+                if (result.success) {
+                    currentData = result.data || [];
+                    log(`✅ Data loaded successfully. Records: ${currentData.length}`);
+                    
+                    updateStatus('✅ Data Loaded Successfully', `Successfully loaded ${currentData.length} LPI records`, 'success');
+                    updateStats();
+                    updateTable();
+                    updateLastUpdate();
+                } else {
+                    throw new Error(result.error || 'Unknown error occurred');
+                }
+
+            } catch (error) {
+                log('❌ Error: ' + error.message);
+                updateStatus('❌ Load Error', error.message, 'error');
+            } finally {
+                // Hide loading state
+                refreshBtn.disabled = false;
+                spinner.style.display = 'none';
+                refreshText.textContent = '🔄 Refresh Data';
+                
+                // Hide loading overlay on first load
+                hideLoadingOverlay();
+            }
+        }
+
+        // Initialize - AUTO LOAD DATA saat website dibuka
+        document.addEventListener('DOMContentLoaded', function() {
+            log('🚀 LPI Monitor Auto-Load initialized');
+            
+            // Langsung fetch data tanpa perlu klik refresh
+            fetchData();
         });
-        const result = await response.text();
-        if (result.includes('success')) {
-          showAlert('success', 'Laporan berhasil dikirim ke Google Sheet!');
-          resetForm();
-        } else {
-          throw new Error(result);
-        }
-      } catch (error) {
-        showAlert('danger', 'Gagal mengirim laporan: ' + error.message);
-      } finally {
-        document.getElementById('loadingOverlay').style.display = 'none';
-      }
-    });
-    function fileToBase64(file) {
-      return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = () => resolve(reader.result);
-        reader.onerror = error => reject(error);
-      });
-    }
-    function resetForm() {
-      document.getElementById('hazardReportForm').reset();
-      document.getElementById('reportDate').valueAsDate = new Date();
-      selectedFiles = [];
-      imagePreview.innerHTML = '';
-    }
-    function showAlert(type, message) {
-      const alert = document.createElement('div');
-      alert.className = `alert alert-${type} alert-dismissible fade show`;
-      alert.innerHTML = `
-        <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'warning' ? 'exclamation-triangle' : 'times-circle'} me-2"></i>
-        ${message}
-        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-      `;
-      document.getElementById('alertContainer').appendChild(alert);
-      setTimeout(() => {
-        if (alert.parentNode) {
-          alert.remove();
-        }
-      }, 5000);
-    }
-  </script>
+
+        // Auto-refresh every 2 minutes
+        setInterval(fetchData, 120000);
+    </script>
 </body>
 </html>
