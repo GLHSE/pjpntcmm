@@ -7,60 +7,13 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <style>
-    .upload-area {
-      border: 2px dashed #007bff;
-      border-radius: 10px;
-      padding: 30px;
-      text-align: center;
-      background-color: #f8f9fa;
-      transition: all 0.3s ease;
-      cursor: pointer;
-    }
-    .upload-area:hover {
-      border-color: #0056b3;
-      background-color: #e3f2fd;
-    }
-    .upload-area.dragover {
-      border-color: #28a745;
-      background-color: #d4edda;
-    }
-    .preview-image {
-      max-width: 100%;
-      max-height: 200px;
-      border-radius: 8px;
-      margin: 10px;
-    }
-    .hazard-card {
-      transition: transform 0.2s;
-    }
-    .hazard-card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    }
-    .loading-overlay {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.5);
-      z-index: 9999;
-    }
-    .loading-spinner {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      color: white;
-      text-align: center;
-    }
-    .connection-status {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      z-index: 1000;
-    }
+    .upload-area { border: 2px dashed #007bff; border-radius: 10px; padding: 30px; text-align: center; background-color: #f8f9fa; transition: all 0.3s ease; cursor: pointer; }
+    .upload-area:hover { border-color: #0056b3; background-color: #e3f2fd; }
+    .upload-area.dragover { border-color: #28a745; background-color: #d4edda; }
+    .preview-image { max-width: 100%; max-height: 200px; border-radius: 8px; margin: 10px; }
+    .loading-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 9999; }
+    .loading-spinner { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: white; text-align: center; }
+    .connection-status { position: fixed; top: 20px; right: 20px; z-index: 1000; }
   </style>
 </head>
 <body>
@@ -74,49 +27,73 @@
   <!-- Loading Overlay -->
   <div class="loading-overlay" id="loadingOverlay">
     <div class="loading-spinner">
-      <div class="spinner-border" role="status">
-        <span class="visually-hidden">Loading...</span>
-      </div>
-      <div class="mt-3">
-        <h5>Menyimpan ke Google Sheet...</h5>
-        <p>Mohon tunggu sebentar</p>
-      </div>
+      <div class="spinner-border text-light" role="status"></div>
+      <div class="mt-3">Mengirim data...</div>
     </div>
   </div>
 
-  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <!-- Navbar ala Campaign.html -->
+  <nav class="navbar navbar-expand-lg navbar-dark sticky-top shadow-sm" style="background-color: #002c5f;">
     <div class="container">
-      <a class="navbar-brand" href="index.html">
-        <img src="hse-prima-jaya-tcmm/logo.png" width="40" class="me-2" alt="Logo" /> PT. Prima Jaya Persada Nusantara
+      <a class="navbar-brand d-flex align-items-center" href="index.html">
+        <img src="hse-prima-jaya-tcmm/logo.png" alt="Logo Perusahaan" style="height:40px; width:auto; margin-right:10px;">
+        PT. Prima Jaya Persada Nusantara
       </a>
-      <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#nav">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse" id="nav">
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <ul class="navbar-nav ms-auto">
           <li class="nav-item"><a class="nav-link" href="index.html">Beranda</a></li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">Report</a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item active" href="hazard-report.html">Hazard Report</a></li>
+              <li><a class="dropdown-item" href="sheap.html">Data SHE AP</a></li>
+              <li id="lpiMenu" class="d-none"><a class="dropdown-item" href="lpi-monitor.html">LPI Monitor</a></li>
+            </ul>
+          </li>
+          <li class="nav-item"><a class="nav-link" href="dokumen.html">Dokumen</a></li>
+          <li class="nav-item"><a class="nav-link" href="Campaign.html">Campaign</a></li>
+          <li class="nav-item" id="loginMenu">
+            <a class="nav-link px-3 py-1" href="#" id="loginBtn" style="background:#fff; border:2px solid #1976d2; border-radius:8px; color:#1976d2; font-size:1rem; margin-left:8px; font-weight:600;">Login</a>
+          </li>
+          <li class="nav-item d-none" id="logoutMenu">
+            <a class="nav-link px-3 py-1" href="#" id="logoutBtn" style="background:#fff; border:2px solid #1976d2; border-radius:8px; color:#1976d2; font-size:1rem; margin-left:8px; font-weight:600;">Logout</a>
+          </li>
         </ul>
       </div>
     </div>
+  <!-- Minimalist Login Modal -->
+  <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true" data-bs-backdrop="false" data-bs-keyboard="true" style="background:none !important;">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content" style="background:#fff; border:1.5px solid #1976d2; border-radius:12px;">
+        <div class="modal-header border-0" style="background:#f8f9fa; border-bottom:1px solid #e3e3e3; border-radius:12px 12px 0 0;">
+          <h5 class="modal-title" id="loginModalLabel" style="color:#1976d2; font-family:sans-serif;">Login</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <!-- Notifikasi error login -->
+          <div id="loginAlert" class="alert alert-danger d-none" role="alert" style="font-size:1rem;">
+            <!-- Pesan error login akan muncul di sini -->
+          </div>
+          <form id="loginForm" autocomplete="off">
+            <div class="mb-3">
+              <input type="email" class="form-control" id="email" placeholder="Email" required autocomplete="username" style="background:#fff; color:#222; border:1px solid #1976d2;">
+            </div>
+            <div class="mb-3">
+              <input type="password" class="form-control" id="password" placeholder="Password" required autocomplete="current-password" style="background:#fff; color:#222; border:1px solid #1976d2;">
+            </div>
+            <button type="submit" class="btn w-100" style="background:#1976d2; color:#fff; font-weight:600; border-radius:6px; border:2px solid #1976d2;">Login</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
   </nav>
 
   <div class="container my-5">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-      <div>
-        <h2 class="mb-2">
-          <i class="fas fa-exclamation-triangle text-warning me-2"></i>Hazard Report
-        </h2>
-        <p class="text-muted mb-0">Sistem Pelaporan Potensi Bahaya - Google Sheet Integration</p>
-      </div>
-      <a href="sheap.html" class="btn btn-outline-primary">
-        <i class="fas fa-chart-line me-2"></i>Data SHEAP
-      </a>
-    </div>
-
-    <!-- Alert Container -->
     <div id="alertContainer"></div>
-
-    <!-- Hazard Report Form -->
     <div class="card mb-4">
       <div class="card-header">
         <h5 class="mb-0">
@@ -133,6 +110,12 @@
                 </label>
                 <input type="text" class="form-control" id="reporterName" required>
               </div>
+              <div class="mb-3">
+                <label for="reporterNIK" class="form-label">
+                  <i class="fas fa-id-card me-1"></i>NIK *
+                </label>
+                <input type="text" class="form-control" id="reporterNIK" required>
+              </div>
             </div>
             <div class="col-md-6">
               <div class="mb-3">
@@ -143,14 +126,32 @@
               </div>
             </div>
           </div>
-
           <div class="row">
             <div class="col-md-6">
               <div class="mb-3">
                 <label for="location" class="form-label">
                   <i class="fas fa-map-marker-alt me-1"></i>Lokasi Temuan *
                 </label>
-                <input type="text" class="form-control" id="location" placeholder="Contoh: Area Tambang Blok A" required>
+                <select class="form-select" id="location" required>
+                  <option value="">Pilih Lokasi</option>
+                  <option value="Front Loading">Front Loading</option>
+                  <option value="Disposal">Disposal</option>
+                  <option value="Jalan Tambang">Jalan Tambang</option>
+                  <option value="Workshop">Workshop</option>
+                  <option value="Warehouse">Warehouse</option>
+                  <option value="Office">Office</option>
+                  <option value="Mess">Mess</option>
+                  <option value="Lainnya">Lainnya</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label for="locationDetail" class="form-label">
+                  <i class="fas fa-info-circle me-1"></i>Detail Lokasi
+                  <div class="form-text ms-4" style="margin-top:-2px;">
+                    (Gerbang Office, Panel Box, Gedung Olahraga, dsb)
+                  </div>
+                </label>
+                <input type="text" class="form-control" id="locationDetail" placeholder="Contoh: Panel Box 3, Area Selatan" required>
               </div>
             </div>
             <div class="col-md-6">
@@ -170,104 +171,118 @@
               </div>
             </div>
           </div>
-
           <div class="mb-3">
             <label for="priority" class="form-label">
-              <i class="fas fa-flag me-1"></i>Tingkat Prioritas *
+              <i class="fas fa-flag me-1"></i>Tingkat Risiko *
             </label>
             <div class="row">
-              <div class="col-md-4">
+              <div class="col-md-3">
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="priority" id="priorityEmergency" value="emergency" required>
+                  <label class="form-check-label text-danger fw-bold" for="priorityEmergency">
+                    <i class="fas fa-bolt me-1"></i><b>Emergency - Darurat</b>
+                  </label>
+                </div>
+              </div>
+              <div class="col-md-3">
                 <div class="form-check">
                   <input class="form-check-input" type="radio" name="priority" id="priorityHigh" value="high" required>
-                  <label class="form-check-label text-danger" for="priorityHigh">
-                    <i class="fas fa-exclamation-triangle me-1"></i>High - Bahaya Tinggi
+                  <label class="form-check-label text-danger fw-bold" for="priorityHigh">
+                    <i class="fas fa-exclamation-triangle me-1"></i><b>High - Bahaya Tinggi</b>
                   </label>
                 </div>
               </div>
-              <div class="col-md-4">
+              <div class="col-md-3">
                 <div class="form-check">
                   <input class="form-check-input" type="radio" name="priority" id="priorityMedium" value="medium" required>
-                  <label class="form-check-label text-warning" for="priorityMedium">
-                    <i class="fas fa-exclamation-circle me-1"></i>Medium - Bahaya Sedang
+                  <label class="form-check-label text-warning fw-bold" for="priorityMedium">
+                    <i class="fas fa-exclamation-circle me-1"></i><b>Medium - Bahaya Sedang</b>
                   </label>
                 </div>
               </div>
-              <div class="col-md-4">
+              <div class="col-md-3">
                 <div class="form-check">
                   <input class="form-check-input" type="radio" name="priority" id="priorityLow" value="low" required>
-                  <label class="form-check-label text-info" for="priorityLow">
-                    <i class="fas fa-info-circle me-1"></i>Low - Bahaya Rendah
+                  <label class="form-check-label text-info fw-bold" for="priorityLow">
+                    <i class="fas fa-info-circle me-1"></i><b>Low - Bahaya Rendah</b>
                   </label>
                 </div>
               </div>
             </div>
           </div>
-
           <div class="mb-3">
             <label for="description" class="form-label">
               <i class="fas fa-file-alt me-1"></i>Deskripsi Temuan *
             </label>
             <textarea class="form-control" id="description" rows="4" placeholder="Jelaskan detail temuan hazard..." required></textarea>
           </div>
-
           <div class="mb-3">
             <label for="recommendation" class="form-label">
               <i class="fas fa-lightbulb me-1"></i>Rekomendasi Tindakan
             </label>
             <textarea class="form-control" id="recommendation" rows="3" placeholder="Saran tindakan perbaikan (opsional)"></textarea>
           </div>
-
-          <!-- Simple File Upload -->
+          <!-- File Upload Open -->
           <div class="mb-3">
             <label class="form-label">
-              <i class="fas fa-camera me-1"></i>Upload Foto Bukti
+              <i class="fas fa-camera me-1"></i>Bukti Foto (Open)
             </label>
-            <div class="upload-area" id="uploadArea">
+            <div class="upload-area" id="uploadAreaOpen">
               <i class="fas fa-cloud-upload-alt fa-3x text-muted mb-3"></i>
-              <h6>Klik untuk memilih foto</h6>
+              <h6>Klik untuk memilih foto Open</h6>
               <p class="text-muted">Format: JPG, PNG, GIF (Max 5MB)</p>
-              <input type="file" id="fileInput" multiple accept="image/*" style="display: none;">
+              <input type="file" id="fileInputOpen" accept="image/*" multiple style="display: none;">
             </div>
-            <div id="imagePreview" class="mt-3"></div>
+            <div id="imagePreviewOpen" class="mt-3"></div>
           </div>
-
-          <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-            <button type="button" class="btn btn-secondary me-md-2" onclick="resetForm()">
+          <!-- File Upload Close -->
+          <div class="mb-3">
+            <label class="form-label">
+              <i class="fas fa-camera me-1"></i>Bukti Foto (Close)
+            </label>
+            <div class="upload-area" id="uploadAreaClose">
+              <i class="fas fa-cloud-upload-alt fa-3x text-muted mb-3"></i>
+              <h6>Klik untuk memilih foto Close</h6>
+              <p class="text-muted">Format: JPG, PNG, GIF (Max 5MB)</p>
+              <input type="file" id="fileInputClose" accept="image/*" multiple style="display: none;">
+            </div>
+            <div id="imagePreviewClose" class="mt-3"></div>
+          </div>
+          <div class="mb-3 text-center">
+            <label for="statusHazard" class="form-label d-block mb-2">
+              <i class="fas fa-toggle-on me-1"></i>Status *
+            </label>
+            <div class="d-inline-block">
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="statusHazard" id="statusOpen" value="Open" required>
+                <label class="form-check-label fw-bold" for="statusOpen" style="color:#dc3545;">Open</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="statusHazard" id="statusClose" value="Close" required>
+                <label class="form-check-label fw-bold" for="statusClose" style="color:#28a745;">Close</label>
+              </div>
+            </div>
+          </div>
+          <div class="d-flex justify-content-center mb-4">
+            <button type="button" class="btn btn-secondary me-2" onclick="resetForm()">
               <i class="fas fa-undo me-2"></i>Reset
             </button>
             <button type="submit" class="btn btn-primary">
-              <i class="fas fa-paper-plane me-2"></i>Kirim ke Google Sheet
+              <i class="fas fa-paper-plane me-2"></i>Submit
             </button>
           </div>
         </form>
       </div>
     </div>
-
-    <!-- Quick Actions -->
-    <div class="row mb-4">
-      <div class="col-md-4">
-        <div class="card">
-          <div class="card-body text-center">
-            <i class="fas fa-cog fa-2x text-primary mb-3"></i>
-            <h6>Connection Status</h6>
-            <p class="text-muted small mb-3">Status koneksi ke Google Apps Script</p>
-            <button onclick="testConnection()" class="btn btn-sm btn-outline-primary">
-              <i class="fas fa-wifi me-1"></i>Test
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Upload Success Notification -->
+    <!-- Notifikasi sukses -->
     <div class="alert alert-success d-none" id="uploadSuccessAlert" role="alert">
       <div class="d-flex align-items-center">
         <i class="fas fa-check-circle fa-2x text-success me-3"></i>
         <div>
           <h6 class="alert-heading mb-1">
-            <i class="fas fa-cloud-upload-alt me-2"></i>File Berhasil Terupload!
+            <i class="fas fa-cloud-upload-alt me-2"></i>File & Data Berhasil Tersimpan!
           </h6>
-          <p class="mb-1">Laporan hazard Anda telah berhasil dikirim ke Google Sheet dengan detail:</p>
+          <p class="mb-1">Laporan hazard Anda telah berhasil dikirim ke Google Sheet & Google Drive.</p>
           <ul class="mb-0 small">
             <li><strong>Report ID:</strong> <span id="uploadedReportId">-</span></li>
             <li><strong>Timestamp:</strong> <span id="uploadedTimestamp">-</span></li>
@@ -276,176 +291,314 @@
         </div>
       </div>
     </div>
-
-    <!-- System Status Info -->
-    <div class="alert alert-info" role="alert">
-      <div class="d-flex align-items-center">
-        <i class="fas fa-info-circle fa-2x text-info me-3"></i>
-        <div>
-          <h6 class="alert-heading mb-1">
-            <i class="fas fa-server me-2"></i>Status Sistem
-          </h6>
-          <p class="mb-1">Sistem Hazard Report terintegrasi dengan Google Sheet untuk penyimpanan data real-time.</p>
-          <div class="small">
-            <span class="badge bg-success me-2">
-              <i class="fas fa-database me-1"></i>Database: Online
-            </span>
-            <span class="badge bg-success me-2">
-              <i class="fas fa-cloud me-1"></i>Cloud Storage: Active
-            </span>
-            <span class="badge bg-success">
-              <i class="fas fa-shield-alt me-1"></i>Security: Enabled
-            </span>
-          </div>
-        </div>
+  </div>
+  <!-- Overlay Password -->
+  <div id="passwordOverlay" style="position:fixed;z-index:99999;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.7);display:flex;align-items:center;justify-content:center;">
+    <div style="background:#fff;padding:40px 30px 30px 30px;border-radius:18px;box-shadow:0 8px 32px rgba(0,0,0,0.25);text-align:center;max-width:350px;width:90%;">
+      <div style="font-size:2.5rem;color:#007BFF;margin-bottom:10px;">
+        <i class="fas fa-lock"></i>
+      </div>
+      <h3 style="margin-bottom:18px;font-weight:bold;color:#333;">Halaman Terkunci</h3>
+      <form id="passwordForm">
+        <input type="password" id="pagePassword" class="form-control mb-3" placeholder="Masukkan Password" style="font-size:1.2rem;text-align:center;" required autocomplete="off">
+        <button type="submit" class="btn btn-primary w-100" style="font-weight:bold;font-size:1.1rem;">Buka Halaman</button>
+        <div id="passwordError" style="color:#dc3545;margin-top:10px;display:none;">Password salah, coba lagi!</div>
+      </form>
+      <div style="margin-top:18px;color:#888;font-size:0.95rem;">
+        <span id="passwordStatusIcon" style="display:inline"></span>
+        <span id="passwordStatusText" style="display:inline"></span>
+      </div>
+      <div style="margin-top:22px;">
+        <a href="index.html" style="display:inline-block; padding:8px 20px; background-color:#6c757d; color:white; text-decoration:none; border-radius:5px; font-weight:bold;">
+          ← Kembali ke Beranda
+        </a>
       </div>
     </div>
   </div>
-
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
+  <!-- Firebase & Login Script -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
+    const firebaseConfig = {
+      apiKey: "AIzaSyA5LMT9TJN_IpLRQ8oA7fsTd-yREztzjiI",
+      authDomain: "loginhsepjpntcm.firebaseapp.com",
+      databaseURL: "https://loginhsepjpntcm-default-rtdb.asia-southeast1.firebasedatabase.app",
+      projectId: "loginhsepjpntcm",
+      storageBucket: "loginhsepjpntcm-default-rtdb.asia-southeast1.appspot.com",
+      messagingSenderId: "104336523676",
+      appId: "1:104336523676:web:304351c3311fc0a2ab4859"
+    };
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    document.addEventListener('DOMContentLoaded', () => {
+      const loginMenu = document.getElementById('loginMenu');
+      const logoutMenu = document.getElementById('logoutMenu');
+      const lpiMenu = document.getElementById('lpiMenu');
+      const passwordOverlay = document.getElementById('passwordOverlay');
+      // Cek status login dari index.html (Firebase Auth state)
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          loginMenu.classList.add('d-none');
+          logoutMenu.classList.remove('d-none');
+          lpiMenu.classList.remove('d-none');
+          // Sembunyikan overlay password jika sudah login
+          if (passwordOverlay) passwordOverlay.style.display = 'none';
+        } else {
+          loginMenu.classList.remove('d-none');
+          logoutMenu.classList.add('d-none');
+          lpiMenu.classList.add('d-none');
+          // Tampilkan overlay password jika belum login
+          if (passwordOverlay) passwordOverlay.style.display = 'flex';
+        }
+      });
+      // Show login modal
+      const loginBtn = document.getElementById('loginBtn');
+      if (loginBtn) {
+        loginBtn.addEventListener('click', function(e) {
+          e.preventDefault();
+          // Reset alert
+          document.getElementById('loginAlert').classList.add('d-none');
+          document.getElementById('loginAlert').textContent = '';
+          const modal = new bootstrap.Modal(document.getElementById('loginModal'));
+          modal.show();
+          // Enable input
+          document.getElementById('email').removeAttribute('readonly');
+          document.getElementById('password').removeAttribute('readonly');
+        });
+      }
+      // Handle login form submit
+      document.getElementById('loginForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        const alertBox = document.getElementById('loginAlert');
+        alertBox.classList.add('d-none');
+        alertBox.textContent = '';
+        try {
+          await signInWithEmailAndPassword(auth, email, password);
+          // Hide modal, tetap di halaman ini
+          bootstrap.Modal.getInstance(document.getElementById('loginModal')).hide();
+        } catch (error) {
+          let msg = 'Login gagal: ';
+          if (error.code === 'auth/user-not-found') msg += 'Email tidak terdaftar.';
+          else if (error.code === 'auth/wrong-password') msg += 'Password salah.';
+          else if (error.code === 'auth/invalid-email') msg += 'Format email tidak valid.';
+          else msg += error.message;
+          alertBox.textContent = msg;
+          alertBox.classList.remove('d-none');
+        }
+      });
+      // Handle logout
+      document.getElementById('logoutBtn').addEventListener('click', async function(e) {
+        e.preventDefault();
+        await signOut(auth);
+        window.location.reload();
+      });
+    });
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
   <script>
-    // Google Apps Script Web App URL - UPDATE SETELAH DEPLOY
-    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxy3-cRejsetNrwjYo9dBszcwql3jVRcsVFZ4Dkk4Er4_PBVlUMdDMkIEgyDq_pZOJb/exec';
+    // Ganti dengan URL Apps Script Anda
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxT6pAGoeRFTT1-_XTbvnr7PKUeMM05rtWEutTwkWDDhFmWueRM5-3Qn87JK5zQ06yyrQ/exec';
 
-    // Google Sheet Info
-    const SPREADSHEET_ID = '1HElxmXiZk4LdvnKPiV6os2miVomm3WdWg6hT0iZl348';
-    const SHEET_GID = '0';
+    // Ganti URL berikut dengan endpoint Apps Script Anda
+const PASSWORD_URL = 'https://script.google.com/macros/s/AKfycbxxYUN_3krrxmqVBcdFHuVUn0oJmXTOfDMHo8jKe0Rxd9AZS8fPVogtAUDrNZPuu_9mzg/exec';
 
-    // Set default date to today
+let sheetPassword = null;
+document.getElementById('passwordStatusIcon').innerHTML = '<i class="fas fa-exclamation-circle fa-warning-icon"></i>';
+document.getElementById('passwordStatusIcon').style.color = 'orange';
+document.getElementById('passwordStatusText').textContent = 'Tidak terhubung ke server';
+document.getElementById('passwordStatusText').className = 'text-warning';
+document.getElementById('passwordStatusText').style.display = 'inline';
+
+// Ambil password dari endpoint
+fetch(PASSWORD_URL)
+  .then(r => r.json())
+  .then(data => {
+    sheetPassword = data.password;
+    // Jika sukses, ubah ke status hijau
+    document.getElementById('passwordStatusIcon').innerHTML = '<i class="fas fa-check-circle"></i>';
+    document.getElementById('passwordStatusIcon').style.color = 'green';
+    document.getElementById('passwordStatusText').textContent = 'Password terhubung';
+    document.getElementById('passwordStatusText').className = 'text-success';
+    document.getElementById('passwordStatusText').style.display = 'inline';
+  })
+  .catch((err) => {
+    // Jika gagal, biarkan status "tidak terhubung" tetap tampil
+    console.error('Password fetch error:', err);
+    sheetPassword = null;
+  });
+
+// Lindungi halaman dengan overlay password
+document.getElementById('passwordForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const pwdInput = document.getElementById('pagePassword');
+  const errBox = document.getElementById('passwordError');
+  if (sheetPassword && pwdInput.value === sheetPassword) {
+    document.getElementById('passwordOverlay').style.display = 'none';
+    pwdInput.value = '';
+    errBox.style.display = 'none';
+  } else {
+    errBox.style.display = 'block';
+    pwdInput.value = '';
+    pwdInput.focus();
+  }
+});
+
+    // Set default date
     document.getElementById('reportDate').valueAsDate = new Date();
 
     // File upload handling
-    const uploadArea = document.getElementById('uploadArea');
-    const fileInput = document.getElementById('fileInput');
-    const imagePreview = document.getElementById('imagePreview');
-    let selectedFiles = [];
+    const uploadAreaOpen = document.getElementById('uploadAreaOpen');
+    const fileInputOpen = document.getElementById('fileInputOpen');
+    const imagePreviewOpen = document.getElementById('imagePreviewOpen');
+    let selectedFilesOpen = [];
 
-    // Click to upload
-    uploadArea.addEventListener('click', () => fileInput.click());
+    const uploadAreaClose = document.getElementById('uploadAreaClose');
+    const fileInputClose = document.getElementById('fileInputClose');
+    const imagePreviewClose = document.getElementById('imagePreviewClose');
+    let selectedFilesClose = [];
 
-    // Drag and drop
-    uploadArea.addEventListener('dragover', (e) => {
-      e.preventDefault();
-      uploadArea.classList.add('dragover');
+    uploadAreaOpen.addEventListener('click', () => fileInputOpen.click());
+    uploadAreaClose.addEventListener('click', () => fileInputClose.click());
+
+    uploadAreaOpen.addEventListener('dragover', (e) => { e.preventDefault(); uploadAreaOpen.classList.add('dragover'); });
+    uploadAreaOpen.addEventListener('dragleave', () => { uploadAreaOpen.classList.remove('dragover'); });
+    uploadAreaOpen.addEventListener('drop', (e) => {
+      e.preventDefault(); uploadAreaOpen.classList.remove('dragover'); handleFilesOpen(e.dataTransfer.files);
     });
+    fileInputOpen.addEventListener('change', (e) => { handleFilesOpen(e.target.files); });
 
-    uploadArea.addEventListener('dragleave', () => {
-      uploadArea.classList.remove('dragover');
+    uploadAreaClose.addEventListener('dragover', (e) => { e.preventDefault(); uploadAreaClose.classList.add('dragover'); });
+    uploadAreaClose.addEventListener('dragleave', () => { uploadAreaClose.classList.remove('dragover'); });
+    uploadAreaClose.addEventListener('drop', (e) => {
+      e.preventDefault(); uploadAreaClose.classList.remove('dragover'); handleFilesClose(e.dataTransfer.files);
     });
+    fileInputClose.addEventListener('change', (e) => { handleFilesClose(e.target.files); });
 
-    uploadArea.addEventListener('drop', (e) => {
-      e.preventDefault();
-      uploadArea.classList.remove('dragover');
-      handleFiles(e.dataTransfer.files);
-    });
-
-    fileInput.addEventListener('change', (e) => {
-      handleFiles(e.target.files);
-    });
-
-    function handleFiles(files) {
+    function handleFilesOpen(files) {
       let fileArray = Array.from(files).filter(file => {
-        if (file.size > 5 * 1024 * 1024) { // 5MB limit
-          showAlert('warning', `File ${file.name} terlalu besar (max 5MB)`);
-          return false;
-        }
+        if (file.size > 5 * 1024 * 1024) { showAlert('warning', `File ${file.name} terlalu besar (max 5MB)`); return false; }
         return file.type.startsWith('image/');
       });
-
-      // Batasi maksimal 2 file
-      if (selectedFiles.length + fileArray.length > 2) {
-        showAlert('warning', 'Maksimal hanya boleh upload 2 foto.');
-        fileArray = fileArray.slice(0, 2 - selectedFiles.length);
-      }
-
-      selectedFiles = selectedFiles.concat(fileArray).slice(0, 2);
-      displayImagePreviews();
+      selectedFilesOpen = selectedFilesOpen.concat(fileArray).slice(0, 2);
+      displayImagePreviewsOpen();
     }
-
-    function displayImagePreviews() {
-      imagePreview.innerHTML = '';
-      selectedFiles.forEach((file, index) => {
+    function displayImagePreviewsOpen() {
+      imagePreviewOpen.innerHTML = '';
+      selectedFilesOpen.forEach((file, index) => {
         const reader = new FileReader();
         reader.onload = (e) => {
           const div = document.createElement('div');
           div.className = 'd-inline-block position-relative me-2 mb-2';
-          div.innerHTML = `
-            <img src="${e.target.result}" class="preview-image" alt="Preview">
-            <button type="button" class="btn btn-danger btn-sm position-absolute top-0 end-0" 
-                    onclick="removeImage(${index})" style="transform: translate(50%, -50%);">
-              <i class="fas fa-times"></i>
-            </button>
-          `;
-          imagePreview.appendChild(div);
+          div.innerHTML = `<img src="${e.target.result}" class="preview-image" alt="Preview">
+            <button type="button" class="btn btn-danger btn-sm position-absolute top-0 end-0" onclick="removeImageOpen(${index})" style="transform: translate(50%, -50%);"><i class="fas fa-times"></i></button>`;
+          imagePreviewOpen.appendChild(div);
         };
         reader.readAsDataURL(file);
       });
     }
+    window.removeImageOpen = function(index) {
+      selectedFilesOpen.splice(index, 1);
+      displayImagePreviewsOpen();
+    };
 
-    function removeImage(index) {
-      selectedFiles.splice(index, 1);
-      displayImagePreviews();
+    function handleFilesClose(files) {
+      let fileArray = Array.from(files).filter(file => {
+        if (file.size > 5 * 1024 * 1024) { showAlert('warning', `File ${file.name} terlalu besar (max 5MB)`); return false; }
+        return file.type.startsWith('image/');
+      });
+      selectedFilesClose = selectedFilesClose.concat(fileArray).slice(0, 2);
+      displayImagePreviewsClose();
     }
+    function displayImagePreviewsClose() {
+      imagePreviewClose.innerHTML = '';
+      selectedFilesClose.forEach((file, index) => {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const div = document.createElement('div');
+          div.className = 'd-inline-block position-relative me-2 mb-2';
+          div.innerHTML = `<img src="${e.target.result}" class="preview-image" alt="Preview">
+            <button type="button" class="btn btn-danger btn-sm position-absolute top-0 end-0" onclick="removeImageClose(${index})" style="transform: translate(50%, -50%);"><i class="fas fa-times"></i></button>`;
+          imagePreviewClose.appendChild(div);
+        };
+        reader.readAsDataURL(file);
+      });
+    }
+    window.removeImageClose = function(index) {
+      selectedFilesClose.splice(index, 1);
+      displayImagePreviewsClose();
+    };
 
     // Form submission - Send to Google Sheet
     document.getElementById('hazardReportForm').addEventListener('submit', async (e) => {
       e.preventDefault();
-
+      
       // Hide previous success notification
       document.getElementById('uploadSuccessAlert').classList.add('d-none');
-
+      
       // Check if script URL is configured
       if (SCRIPT_URL.includes('YOUR_SCRIPT_ID')) {
         showAlert('warning', 'Google Apps Script belum dikonfigurasi. Silakan setup terlebih dahulu.');
         return;
       }
-
+      
       // Show loading
       document.getElementById('loadingOverlay').style.display = 'block';
-
+      
       try {
         // Prepare form data
         const formData = new FormData();
         formData.append('reporterName', document.getElementById('reporterName').value);
+        formData.append('reporterNIK', document.getElementById('reporterNIK').value);
         formData.append('reportDate', document.getElementById('reportDate').value);
         formData.append('location', document.getElementById('location').value);
+        formData.append('locationDetail', document.getElementById('locationDetail').value); // TAMBAHKAN INI
         formData.append('hazardType', document.getElementById('hazardType').value);
         formData.append('priority', document.querySelector('input[name="priority"]:checked').value);
         formData.append('description', document.getElementById('description').value);
         formData.append('recommendation', document.getElementById('recommendation').value);
-
+        formData.append('statusHazard', document.querySelector('input[name="statusHazard"]:checked').value); // TAMBAHKAN INI
+        
         // Add files as base64
-        for (let i = 0; i < selectedFiles.length; i++) {
-          const file = selectedFiles[i];
+        for (let i = 0; i < selectedFilesOpen.length; i++) {
+          const file = selectedFilesOpen[i];
           const base64 = await fileToBase64(file);
-          formData.append(`file${i}`, base64);
-          formData.append(`fileName${i}`, file.name);
+          formData.append(`fileOpen${i}`, base64);
+          formData.append(`fileNameOpen${i}`, file.name);
         }
-
+        
+        for (let i = 0; i < selectedFilesClose.length; i++) {
+          const file = selectedFilesClose[i];
+          const base64 = await fileToBase64(file);
+          formData.append(`fileClose${i}`, base64);
+          formData.append(`fileNameClose${i}`, file.name);
+        }
+        
         // Send to Google Apps Script
         const response = await fetch(SCRIPT_URL, {
           method: 'POST',
           body: formData
         });
-
+        
         const result = await response.text();
         console.log('Response:', result);
-
+        
         if (result.includes('success')) {
-          // Extract Report ID from response if available
-          const reportIdMatch = result.match(/HR-\d{8}-\d{6}/);
-          const reportId = reportIdMatch ? reportIdMatch[0] : 'HR-' + new Date().toISOString().replace(/[^\d]/g, '').slice(0, 14);
+  // Extract Report ID from response if available
+  const reportIdMatch = result.match(/HR-\d{8}-\d{6}/);
+  const reportId = reportIdMatch ? reportIdMatch[0] : 'HR-' + new Date().toISOString().replace(/[^\d]/g, '').slice(0, 14);
 
-          // Show success notification
-          showUploadSuccess(reportId);
-          showAlert('success', 'Laporan berhasil dikirim ke Google Sheet!');
-          resetForm();
-          updateConnectionStatus('connected');
-        } else {
+  // Show success notification
+  showUploadSuccess(reportId);
+  showAlert('success', 'Laporan berhasil dikirim ke Google Sheet!');
+  resetForm();
+  updateConnectionStatus('connected');
+} else {
           throw new Error(result);
         }
-
+        
       } catch (error) {
         console.error('Error:', error);
         showAlert('danger', 'Gagal mengirim laporan: ' + error.message);
@@ -460,12 +613,12 @@
       const successAlert = document.getElementById('uploadSuccessAlert');
       const reportIdSpan = document.getElementById('uploadedReportId');
       const timestampSpan = document.getElementById('uploadedTimestamp');
-
+      
       reportIdSpan.textContent = reportId;
       timestampSpan.textContent = new Date().toLocaleString('id-ID');
-
+      
       successAlert.classList.remove('d-none');
-
+      
       // Scroll to success notification
       successAlert.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
@@ -483,8 +636,10 @@
     function resetForm() {
       document.getElementById('hazardReportForm').reset();
       document.getElementById('reportDate').valueAsDate = new Date();
-      selectedFiles = [];
-      imagePreview.innerHTML = '';
+      selectedFilesOpen = [];
+      selectedFilesClose = [];
+      imagePreviewOpen.innerHTML = '';
+      imagePreviewClose.innerHTML = '';
     }
 
     function showAlert(type, message) {
@@ -496,7 +651,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
       `;
       document.getElementById('alertContainer').appendChild(alert);
-
+      
       setTimeout(() => {
         if (alert.parentNode) {
           alert.remove();
@@ -504,68 +659,102 @@
       }, 5000);
     }
 
-    // Test connection to Google Apps Script
-    async function testConnection() {
-      if (SCRIPT_URL.includes('YOUR_SCRIPT_ID')) {
-        showAlert('warning', 'Google Apps Script URL belum dikonfigurasi');
-        return;
-      }
-
-      try {
-        updateConnectionStatus('testing');
-        const response = await fetch(SCRIPT_URL + '?test=true');
-        const result = await response.text();
-
-        if (response.ok) {
-          showAlert('success', 'Koneksi ke Google Apps Script berhasil!');
-          updateConnectionStatus('connected');
-        } else {
-          throw new Error('HTTP ' + response.status);
-        }
-      } catch (error) {
-        showAlert('danger', 'Koneksi gagal: ' + error.message);
-        updateConnectionStatus('error');
-      }
-    }
-
     // Update connection status indicator
     function updateConnectionStatus(status) {
-      const statusElement = document.getElementById('connectionStatus');
+  const statusElement = document.getElementById('connectionStatus');
+  switch (status) {
+    case 'connected':
+      statusElement.className = 'badge bg-success';
+      statusElement.innerHTML = '<i class="fas fa-check-circle"></i> Connected';
+      break;
+    case 'error':
+      statusElement.className = 'badge bg-danger';
+      statusElement.innerHTML = '<i class="fas fa-times-circle"></i> Error';
+      break;
+    case 'testing':
+      statusElement.className = 'badge bg-warning';
+      statusElement.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Testing...';
+      break;
+    default:
+      statusElement.className = 'badge bg-secondary';
+      statusElement.innerHTML = '<i class="fas fa-circle"></i> Not configured';
+  }
+}
 
-      switch (status) {
-        case 'connected':
-          statusElement.className = 'badge bg-success';
-          statusElement.innerHTML = '<i class="fas fa-check-circle"></i> Connected';
-          break;
-        case 'error':
-          statusElement.className = 'badge bg-danger';
-          statusElement.innerHTML = '<i class="fas fa-times-circle"></i> Error';
-          break;
-        case 'testing':
-          statusElement.className = 'badge bg-warning';
-          statusElement.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Testing...';
-          break;
-        default:
-          statusElement.className = 'badge bg-secondary';
-          statusElement.innerHTML = '<i class="fas fa-circle"></i> Not configured';
-      }
+// Test connection to Google Apps Script
+async function testConnection() {
+  if (SCRIPT_URL.includes('YOUR_SCRIPT_ID')) {
+    updateConnectionStatus('not-configured');
+    return;
+  }
+  try {
+    updateConnectionStatus('testing');
+    const response = await fetch(SCRIPT_URL + '?test=true');
+    if (response.ok) {
+      updateConnectionStatus('connected');
+    } else {
+      updateConnectionStatus('error');
     }
+  } catch (error) {
+    updateConnectionStatus('error');
+  }
+}
 
-    // Check connection on page load
-    document.addEventListener('DOMContentLoaded', () => {
-      if (!SCRIPT_URL.includes('YOUR_SCRIPT_ID')) {
-        testConnection();
-      } else {
-        updateConnectionStatus('not-configured');
-      }
+// Check connection on page load
+document.addEventListener('DOMContentLoaded', () => {
+  testConnection();
+});
+
+    document.addEventListener('DOMContentLoaded', function() {
+  // Tampilkan status "tidak terhubung" sejak awal
+  document.getElementById('passwordStatusIcon').innerHTML = '<i class="fas fa-exclamation-circle fa-warning-icon"></i>';
+  document.getElementById('passwordStatusIcon').style.color = 'orange';
+  document.getElementById('passwordStatusText').textContent = 'Tidak terhubung ke server';
+  document.getElementById('passwordStatusText').className = 'text-warning';
+  document.getElementById('passwordStatusText').style.display = 'inline';
+
+  // Ambil password dari endpoint
+  let sheetPassword = null;
+  fetch('https://script.googleusercontent.com/macros/echo?user_content_key=AehSKLhLUXbbewOVejilKoLtvUMGfIbvcKz0o_32uRUjGHALceDt7KNfX7CK7U5cQBDu674KufUTJ-aLHW7-3yoSGivSyToPfrxMnizxAa4V77aMFEk-ZS0iRUc8hkPW_ZJ_Daff1Za4gJcDX4Z13yMFHNg0c89DFC7tunchDXVVO_GVBFdQlk5Zmf-rrj2tmpA2FBRmB3UbF6yZ3PSq7uz-gOWiLA4nIskTue2NX-gRjnUssSRRmvoX-joV--2QnDa4u_88OjxjHZNWwg84XgQKzI_0IZtHVVTvB_eGEIe72vuc_9l7aSaDqYBgBefueg&lib=MHA4i-w8so2FGWH4g8fyXUc9z3mUUDUeO')
+    .then(r => r.json())
+    .then(data => {
+      sheetPassword = data.password;
+      // Jika sukses, ubah ke status hijau
+      document.getElementById('passwordStatusIcon').innerHTML = '<i class="fas fa-check-circle"></i>';
+      document.getElementById('passwordStatusIcon').style.color = 'green';
+      document.getElementById('passwordStatusText').textContent = 'Password terhubung';
+      document.getElementById('passwordStatusText').className = 'text-success';
+      document.getElementById('passwordStatusText').style.display = 'inline';
+    })
+    .catch((err) => {
+      // Jika gagal, biarkan status "tidak terhubung" tetap tampil
+      console.error('Password fetch error:', err);
+      sheetPassword = null;
     });
+
+  // Lindungi halaman dengan overlay password
+  document.getElementById('passwordForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const pwdInput = document.getElementById('pagePassword');
+    const errBox = document.getElementById('passwordError');
+    if (sheetPassword && pwdInput.value === sheetPassword) {
+      document.getElementById('passwordOverlay').style.display = 'none';
+      pwdInput.value = '';
+      errBox.style.display = 'none';
+    } else {
+      errBox.style.display = 'block';
+      pwdInput.value = '';
+      pwdInput.focus();
+    }
+  });
+});
   </script>
 
-  <div style="text-align:center; margin-top: 40px;">
-    <a href="hazard-log.html" style="display:inline-block; padding:12px 24px; background-color:#007BFF; color:white; text-decoration:none; border-radius:5px; font-weight:bold;">
-      Lihat Hazard Log
-    </a>
-  </div>
+<div style="text-align:center; margin-top: 40px;">
+  <a href="hazard-log.html" style="display:inline-block; padding:12px 24px; background-color:#007BFF; color:white; text-decoration:none; border-radius:5px; font-weight:bold;">
+    Monitoring Hazard
+  </a>
+</div>
 
 </body>
 </html>
