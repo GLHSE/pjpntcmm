@@ -6,26 +6,219 @@
   <title>MoM - PT. Prima Jaya Persada Nusantara</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <style>
+    body { font-family: 'Segoe UI', Arial, sans-serif !important; background: #fafafa; }
+    .navbar-campaign {
+      background-color: #002c5f !important;
+      border-bottom: 1.5px solid #e3e3e3;
+      box-shadow: 0 2px 8px 0 rgba(25, 118, 210, 0.06);
+    }
+    /* Remove all neon and shadow effects */
+    .navbar-campaign .nav-link,
+    .navbar-campaign .nav-link.active,
+    .navbar-campaign .nav-link:focus,
+    .navbar-campaign .nav-link:hover {
+      text-shadow: none !important;
+      box-shadow: none !important;
+    }
+    .navbar-campaign .navbar-brand {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      font-weight: 400;
+      font-size: 1.35rem;
+      color: #fff !important;
+      letter-spacing: 1px;
+      display: flex;
+      align-items: center;
+      padding: 0;
+      border-radius: 0;
+      background: transparent;
+      border: none;
+      box-shadow: none;
+    }
+    .navbar-campaign .navbar-brand img {
+      height: 40px;
+      width: auto;
+      margin-right: 10px;
+    }
+    .navbar-campaign .nav-link {
+      color: #e3e3e3 !important;
+      font-size: 1rem;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      letter-spacing: 0.5px;
+      font-weight: 400;
+      transition: color 0.2s, text-shadow 0.2s;
+      text-shadow: none;
+    }
+    .navbar-campaign .nav-link.active, .navbar-campaign .nav-link:focus {
+      color: #fff !important;
+      font-weight: 400;
+      text-shadow: 0 1px 4px #1976d2;
+    }
+    .navbar-campaign .nav-link:hover {
+      color: #ffcb05 !important;
+      text-shadow: 0 1px 4px #1976d2;
+    }
+    .navbar-campaign .dropdown-menu {
+      background: #fff;
+      border: 1.5px solid #1976d2;
+      box-shadow: 0 2px 8px rgba(25, 118, 210, 0.08);
+    }
+    .navbar-campaign .dropdown-item {
+      color: #1976d2;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      letter-spacing: 1px;
+      transition: background 0.2s, color 0.2s;
+    }
+    .navbar-campaign .dropdown-item:hover, .navbar-campaign .dropdown-item:focus {
+      background: #1976d2;
+      color: #fff;
+    }
+    .navbar-campaign .nav-link.px-3 {
+      background: #fff;
+      color: #1976d2 !important;
+      border: 2px solid #1976d2;
+      border-radius: 8px;
+      margin-left: 8px;
+      font-weight: 400;
+      font-size: 1rem;
+      box-shadow: none;
+      transition: background 0.2s, color 0.2s, border 0.2s;
+    }
+    .navbar-campaign .nav-link.px-3:hover {
+      background: #1976d2;
+      color: #fff !important;
+      border: 2px solid #fff;
+    }
+  </style>
+  <!-- Navbar dari Campaign.html -->
+  <nav class="navbar navbar-expand-lg navbar-dark sticky-top shadow-sm" style="background-color: #002c5f;">
     <div class="container">
-      <a class="navbar-brand" href="index.html">
-        <img src="hse-prima-jaya-tcmm/logo.png" width="40" class="me-2" alt="Logo" /> PT. Prima Jaya Persada Nusantara
+      <a class="navbar-brand d-flex align-items-center" href="index.html">
+        <img src="hse-prima-jaya-tcmm/logo.png" alt="Logo Perusahaan" style="height:40px; width:auto; margin-right:10px;">
+        PT. Prima Jaya Persada Nusantara
       </a>
-      <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#nav">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse" id="nav">
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <ul class="navbar-nav ms-auto">
           <li class="nav-item"><a class="nav-link" href="index.html">Beranda</a></li>
-          <li class="nav-item"><a class="nav-link" href="hazard-report.html">Report</a></li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">Report</a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="hazard-report.html">Hazard Report</a></li>
+              <li><a class="dropdown-item" href="sheap.html">Data SHE AP</a></li>
+              <li id="lpiMenu" class="d-none"><a class="dropdown-item" href="lpi-monitor.html">LPI Monitor</a></li>
+            </ul>
+          </li>
           <li class="nav-item"><a class="nav-link active" href="dokumen.html">Dokumen</a></li>
           <li class="nav-item"><a class="nav-link" href="Campaign.html">Campaign</a></li>
+          <li class="nav-item" id="loginMenu">
+            <a class="nav-link px-3 py-1" href="#" id="loginBtn" style="background:#fff; border:2px solid #1976d2; border-radius:8px; color:#1976d2; font-size:1rem; margin-left:8px; font-weight:600;">Login</a>
+          </li>
+          <li class="nav-item d-none" id="logoutMenu">
+            <a class="nav-link px-3 py-1" href="#" id="logoutBtn" style="background:#fff; border:2px solid #1976d2; border-radius:8px; color:#1976d2; font-size:1rem; margin-left:8px; font-weight:600;">Logout</a>
+          </li>
         </ul>
       </div>
     </div>
+    <!-- Minimalist Login Modal -->
+    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true" data-bs-backdrop="false" data-bs-keyboard="true" style="background:none !important;">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content" style="background:#fff; border:1.5px solid #1976d2; border-radius:12px;">
+          <div class="modal-header border-0" style="background:#f8f9fa; border-bottom:1px solid #e3e3e3; border-radius:12px 12px 0 0;">
+            <h5 class="modal-title" id="loginModalLabel" style="color:#1976d2; font-family:sans-serif;">Login</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <!-- Notifikasi error login -->
+            <div id="loginAlert" class="alert alert-danger d-none" role="alert" style="font-size:1rem;"></div>
+            <form id="loginForm" autocomplete="off">
+              <div class="mb-3">
+                <input type="email" class="form-control" id="email" placeholder="Email" required autocomplete="username" style="background:#fff; color:#222; border:1px solid #1976d2;">
+              </div>
+              <div class="mb-3">
+                <input type="password" class="form-control" id="password" placeholder="Password" required autocomplete="current-password" style="background:#fff; color:#222; border:1px solid #1976d2;">
+              </div>
+              <button type="submit" class="btn w-100" style="background:#1976d2; color:#fff; font-weight:600; border-radius:6px; border:2px solid #1976d2;">Login</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
   </nav>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
+    const firebaseConfig = {
+      apiKey: "AIzaSyA5LMT9TJN_IpLRQ8oA7fsTd-yREztzjiI",
+      authDomain: "loginhsepjpntcm.firebaseapp.com",
+      databaseURL: "https://loginhsepjpntcm-default-rtdb.asia-southeast1.firebasedatabase.app",
+      projectId: "loginhsepjpntcm",
+      storageBucket: "loginhsepjpntcm-default-rtdb.asia-southeast1.appspot.com",
+      messagingSenderId: "104336523676",
+      appId: "1:104336523676:web:304351c3311fc0a2ab4859"
+    };
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    document.addEventListener('DOMContentLoaded', () => {
+      const loginMenu = document.getElementById('loginMenu');
+      const logoutMenu = document.getElementById('logoutMenu');
+      const lpiMenu = document.getElementById('lpiMenu');
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          loginMenu.classList.add('d-none');
+          logoutMenu.classList.remove('d-none');
+          lpiMenu.classList.remove('d-none');
+        } else {
+          loginMenu.classList.remove('d-none');
+          logoutMenu.classList.add('d-none');
+          lpiMenu.classList.add('d-none');
+        }
+      });
+      const loginBtn = document.getElementById('loginBtn');
+      if (loginBtn) {
+        loginBtn.addEventListener('click', function(e) {
+          e.preventDefault();
+          document.getElementById('loginAlert').classList.add('d-none');
+          document.getElementById('loginAlert').textContent = '';
+          const modal = new bootstrap.Modal(document.getElementById('loginModal'));
+          modal.show();
+          document.getElementById('email').removeAttribute('readonly');
+          document.getElementById('password').removeAttribute('readonly');
+        });
+      }
+      document.getElementById('loginForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        const alertBox = document.getElementById('loginAlert');
+        alertBox.classList.add('d-none');
+        alertBox.textContent = '';
+        try {
+          await signInWithEmailAndPassword(auth, email, password);
+          bootstrap.Modal.getInstance(document.getElementById('loginModal')).hide();
+        } catch (error) {
+          let msg = 'Login gagal: ';
+          if (error.code === 'auth/user-not-found') msg += 'Email tidak terdaftar.';
+          else if (error.code === 'auth/wrong-password') msg += 'Password salah.';
+          else if (error.code === 'auth/invalid-email') msg += 'Format email tidak valid.';
+          else msg += error.message;
+          alertBox.textContent = msg;
+          alertBox.classList.remove('d-none');
+        }
+      });
+      document.getElementById('logoutBtn').addEventListener('click', async function(e) {
+        e.preventDefault();
+        await signOut(auth);
+        window.location.reload();
+      });
+    });
+  </script>
 
   <div class="container my-5">
     <div class="row justify-content-center">
