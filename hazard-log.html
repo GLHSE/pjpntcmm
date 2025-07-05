@@ -102,6 +102,70 @@
       color: white;
       font-weight: bold;
     }
+    
+    /* Priority/Risk Level Styles */
+    .priority-emergency {
+      background: linear-gradient(135deg, #dc2626, #b91c1c);
+      color: white;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-weight: bold;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      box-shadow: 0 2px 8px rgba(220, 38, 38, 0.3);
+      animation: pulse 2s infinite;
+    }
+    
+    .priority-high {
+      background: linear-gradient(135deg, #ea580c, #c2410c);
+      color: white;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-weight: bold;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      box-shadow: 0 2px 8px rgba(234, 88, 12, 0.3);
+    }
+    
+    .priority-medium {
+      background: linear-gradient(135deg, #eab308, #ca8a04);
+      color: white;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-weight: bold;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      box-shadow: 0 2px 8px rgba(234, 179, 8, 0.3);
+    }
+    
+    .priority-low {
+      background: linear-gradient(135deg, #16a34a, #15803d);
+      color: white;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-weight: bold;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      box-shadow: 0 2px 8px rgba(22, 163, 74, 0.3);
+    }
+    
+    @keyframes pulse {
+      0% {
+        box-shadow: 0 2px 8px rgba(220, 38, 38, 0.3);
+      }
+      50% {
+        box-shadow: 0 4px 16px rgba(220, 38, 38, 0.6);
+        transform: scale(1.05);
+      }
+      100% {
+        box-shadow: 0 2px 8px rgba(220, 38, 38, 0.3);
+      }
+    }
+    
     .back-button {
       margin-top: 30px;
       display: inline-block;
@@ -182,108 +246,189 @@
       text-decoration: none;
     }
     
+    /* Priority Statistics */
+    .priority-stats {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 30px;
+      flex-wrap: wrap;
+    }
+    
+    .priority-stat-card {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 15px 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      min-width: 120px;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    
+    .priority-stat-number {
+      font-size: 1.8rem;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+    
+    .priority-stat-label {
+      font-size: 0.9rem;
+      color: #374151;
+      text-transform: uppercase;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+        
     /* Mobile Responsive Design */
     @media (max-width: 768px) {
       body {
         padding: 10px;
       }
-      
+            
       .header-container {
         padding: 15px;
         margin-bottom: 20px;
       }
-      
+            
       .logo {
         width: 60px;
         height: 60px;
         margin-bottom: 10px;
       }
-      
+            
       h1 {
         font-size: 1.8rem;
         margin-bottom: 5px;
       }
-      
+            
       .subtitle {
         font-size: 0.9rem;
       }
-      
+            
       .close-button {
         top: 10px;
         right: 15px;
         font-size: 24px;
       }
-      
+            
       .sheet-button {
         padding: 10px 20px;
         font-size: 0.9rem;
         margin: 5px;
       }
-      
+            
       table {
         font-size: 12px;
         border-radius: 8px;
       }
-      
+            
       th, td {
         padding: 8px 4px;
         font-size: 11px;
       }
-      
+            
       th {
         font-size: 10px;
         letter-spacing: 0.3px;
       }
-      
+            
       .foto-button {
         padding: 5px 12px;
         font-size: 0.8rem;
         margin: 2px 0;
         border-radius: 15px;
       }
-      
+            
       .status-open, .status-close {
         padding: 3px 6px;
         font-size: 11px;
       }
       
+      .priority-emergency, .priority-high, .priority-medium, .priority-low {
+        padding: 4px 8px;
+        font-size: 10px;
+        border-radius: 15px;
+      }
+      
+      .priority-stats {
+        gap: 10px;
+        margin-bottom: 20px;
+      }
+      
+      .priority-stat-card {
+        padding: 10px 15px;
+        min-width: 100px;
+      }
+      
+      .priority-stat-number {
+        font-size: 1.4rem;
+      }
+      
+      .priority-stat-label {
+        font-size: 0.8rem;
+      }
+            
       .back-button {
         padding: 10px 20px;
         font-size: 0.9rem;
         margin-top: 20px;
       }
     }
-    
+        
     @media (max-width: 480px) {
       h1 {
         font-size: 1.5rem;
       }
-      
+            
       .subtitle {
         font-size: 0.8rem;
       }
-      
+            
       .sheet-button {
         padding: 8px 16px;
         font-size: 0.8rem;
       }
-      
+            
       /* Make table more mobile-friendly */
       table {
         font-size: 10px;
       }
-      
+            
       th, td {
         padding: 6px 3px;
         font-size: 9px;
       }
-      
+            
       .foto-button {
         padding: 4px 8px;
         font-size: 0.7rem;
         margin: 1px;
       }
       
+      .priority-emergency, .priority-high, .priority-medium, .priority-low {
+        padding: 3px 6px;
+        font-size: 8px;
+        border-radius: 12px;
+      }
+      
+      .priority-stats {
+        gap: 8px;
+      }
+      
+      .priority-stat-card {
+        padding: 8px 12px;
+        min-width: 80px;
+      }
+      
+      .priority-stat-number {
+        font-size: 1.2rem;
+      }
+      
+      .priority-stat-label {
+        font-size: 0.7rem;
+      }
+            
       /* Enable horizontal scroll for table */
       .table-wrapper {
         overflow-x: auto;
@@ -294,20 +439,20 @@
 </head>
 <body>
   <a href="hazard-report.html" class="close-button" title="Kembali ke Form">×</a>
-  
+    
   <div class="header-container">
     <img src="hse-prima-jaya-tcmm/logo.png" alt="Logo Prima Jaya TCMM" class="logo">
     <h1>Monitoring Hazard Report</h1>
     <p class="subtitle">Sistem Monitoring Laporan Bahaya Prima Jaya TCMM</p>
   </div>
-  
+    
   <!-- Tombol ke Google Sheet -->
   <div class="button-container" style="margin-bottom: 20px;">
-    <a href="https://docs.google.com/spreadsheets/d/1vEdl34AyXmY4dBYEdqp5n9rKpB0YaZ6OR_WB80tXz5o/edit?gid=0#gid=0&t=<?php echo time(); ?>" 
-       class="sheet-button" target="_blank">📊 Buka Google Sheet</a>
+    <a href="https://docs.google.com/spreadsheets/d/1vEdl34AyXmY4dBYEdqp5n9rKpB0YaZ6OR_WB80tXz5o/edit?gid=0#gid=0&t=<?php echo time(); ?>"
+        class="sheet-button" target="_blank">📊 Buka Google Sheet</a>
   </div>
-  
-  <div class="stats-grid" style="display: flex; justify-content: center; gap: 30px; margin-bottom: 30px;">
+    
+  <div class="stats-grid" style="display: flex; justify-content: center; gap: 30px; margin-bottom: 20px;">
     <div class="stat-card" style="background: linear-gradient(135deg, #f8fafc 60%, #e0e7ff 100%); padding: 30px 40px; border-radius: 18px; box-shadow: 0 8px 32px rgba(59, 130, 246, 0.10); text-align: center; border: 2px solid #e0e7ff; min-width: 200px;">
       <div class="stat-number open" id="openCount" style="color: #dc2626; font-size: 2.7rem; font-weight: bold; margin-bottom: 8px;">0</div>
       <div class="stat-label" style="font-size: 1.05rem; color: #374151; text-transform: uppercase; font-weight: 600; letter-spacing: 1px;">Open</div>
@@ -317,6 +462,27 @@
       <div class="stat-label" style="font-size: 1.05rem; color: #374151; text-transform: uppercase; font-weight: 600; letter-spacing: 1px;">Close</div>
     </div>
   </div>
+  
+  <!-- Priority Statistics -->
+  <div class="priority-stats">
+    <div class="priority-stat-card">
+      <div class="priority-stat-number" id="emergencyCount" style="color: #dc2626;">0</div>
+      <div class="priority-stat-label">Emergency</div>
+    </div>
+    <div class="priority-stat-card">
+      <div class="priority-stat-number" id="highCount" style="color: #ea580c;">0</div>
+      <div class="priority-stat-label">High</div>
+    </div>
+    <div class="priority-stat-card">
+      <div class="priority-stat-number" id="mediumCount" style="color: #eab308;">0</div>
+      <div class="priority-stat-label">Medium</div>
+    </div>
+    <div class="priority-stat-card">
+      <div class="priority-stat-number" id="lowCount" style="color: #16a34a;">0</div>
+      <div class="priority-stat-label">Low</div>
+    </div>
+  </div>
+
   <div class="table-wrapper">
     <table id="hazardTable">
       <thead>
@@ -324,6 +490,7 @@
           <th>Tanggal Pelaporan</th>
           <th>Deskripsi Temuan</th>
           <th>Rekomendasi Tindakan</th>
+          <th>Tingkat Risiko</th>
           <th>Bukti Foto (Open)</th>
           <th>Bukti Foto (Close)</th>
           <th>Lokasi Temuan</th>
@@ -334,26 +501,53 @@
       <tbody></tbody>
     </table>
   </div>
+
   <div class="button-container">
     <a href="hazard-report.html" class="back-button">← Kembali ke Halaman Hazard Report</a>
   </div>
+
   <script>
-const scriptURL = "https://script.google.com/macros/s/AKfycbycRuFZ-xX3qARcwo6EYRSJRfhIi0kuYbJGVXirMSArVsp_Cubt6IutQtUp686ZbDHjiw/exec";
+const scriptURL = "https://script.google.com/macros/s/AKfycbwkrcHFvuWY7Z3ThnjfLddxSIgkCQ9UHuSrznMZyssDkALru3-wUaWYgRwjFOyYyZrp2Q/exec";
 
 fetch(scriptURL)
   .then(response => response.json())
   .then(data => {
     let openCount = 0;
     let closeCount = 0;
+    let emergencyCount = 0;
+    let highCount = 0;
+    let mediumCount = 0;
+    let lowCount = 0;
+    
     const tbody = document.querySelector("#hazardTable tbody");
     tbody.innerHTML = "";
+    
     // Reverse the data array to show latest entries first (bottom to top)
     data.reverse().forEach(row => {
+      // Count status
       if (row.status && row.status.toLowerCase() === 'close') {
         closeCount++;
       } else {
         openCount++;
       }
+      
+      // Count priority levels
+      const priority = row.prioritas || row.priority || "";
+      switch(priority.toLowerCase()) {
+        case 'emergency':
+          emergencyCount++;
+          break;
+        case 'high':
+          highCount++;
+          break;
+        case 'medium':
+          mediumCount++;
+          break;
+        case 'low':
+          lowCount++;
+          break;
+      }
+
       function formatTanggal(tanggalStr) {
         if (!tanggalStr) return "";
         // Jika format ISO (misal: 2025-06-24T16:00:00.000Z)
@@ -371,6 +565,7 @@ fetch(scriptURL)
         }
         return tanggalStr;
       }
+
       // Tampilkan tombol "Lihat Foto" yang lebih menarik
       let fotoCell = "-";
       if (row.fotoOpen && row.fotoOpen.trim() !== "") {
@@ -379,6 +574,7 @@ fetch(scriptURL)
           `<a class="foto-button" href="${url}" target="_blank">📷 Foto${fotoArr.length > 1 ? ' ' + (i+1) : ''}</a>`
         ).join('<br>');
       }
+
       let fotoCloseCell = "-";
       if (row.fotoClose && row.fotoClose.trim() !== "") {
         const fotoArr = row.fotoClose.split(/\s*,\s*|\s+/).filter(Boolean);
@@ -386,14 +582,33 @@ fetch(scriptURL)
           `<a class="foto-button" href="${url}" target="_blank">📷 Foto${fotoArr.length > 1 ? ' ' + (i+1) : ''}</a>`
         ).join('<br>');
       }
+
       let lokasiCell = row.lokasi || "-";
       const statusClass = row.status && row.status.toLowerCase() === "close" ? "status-close" : "status-open";
       const statusLabel = row.status || "-";
+      
+      // Priority styling
+      function getPriorityClass(priority) {
+        switch(priority.toLowerCase()) {
+          case 'emergency': return 'priority-emergency';
+          case 'high': return 'priority-high';
+          case 'medium': return 'priority-medium';
+          case 'low': return 'priority-low';
+          default: return '';
+        }
+      }
+      
+      const priorityClass = getPriorityClass(priority);
+      const priorityDisplay = priority ? 
+        `<span class="${priorityClass}">${priority.toUpperCase()}</span>` : 
+        '<span style="color: #6b7280;">-</span>';
+
       const tr = document.createElement("tr");
       tr.innerHTML = `
         <td>${formatTanggal(row.tanggal)}</td>
         <td>${row.deskripsi || ""}</td>
         <td>${row.rekomendasi || ""}</td>
+        <td>${priorityDisplay}</td>
         <td>${fotoCell}</td>
         <td>${fotoCloseCell}</td>
         <td>${lokasiCell}</td>
@@ -402,8 +617,14 @@ fetch(scriptURL)
       `;
       tbody.appendChild(tr);
     });
+
+    // Update counters
     document.getElementById('openCount').textContent = openCount;
     document.getElementById('closeCount').textContent = closeCount;
+    document.getElementById('emergencyCount').textContent = emergencyCount;
+    document.getElementById('highCount').textContent = highCount;
+    document.getElementById('mediumCount').textContent = mediumCount;
+    document.getElementById('lowCount').textContent = lowCount;
   })
   .catch(error => {
     console.error("Gagal memuat data:", error);
